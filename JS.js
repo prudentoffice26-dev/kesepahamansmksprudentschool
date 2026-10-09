@@ -1,4 +1,4 @@
-// DATA KESEPAHAMAN SMK PRUDENT SCHOOL TA 2026/2027
+// DATA FULL DOKUMEN KESEPAHAMAN SMK PRUDENT SCHOOL TA 2026/2027
 const kesepahamanData = [
   {
     id: 1,
@@ -287,7 +287,7 @@ function renderBabCards(dataList) {
 
   if (dataList.length === 0) {
     babCardList.innerHTML = `
-      <div class="text-center py-8 text-slate-400 text-xs">
+      <div class="text-center py-8 text-slate-400 text-xs font-medium">
         Data tidak ditemukan. Coba kata kunci lain.
       </div>
     `;
@@ -390,42 +390,23 @@ function openBabDetail(item) {
   }, 150);
 }
 
-// Render Gambar Lembar Pengesahan (Statis tanpa tombol upload user)
+// Render Tampilan Gambar Pengesahan Statis
 function renderPengesahanSlot() {
   detailPasalContainer.innerHTML = `
     <div class="bg-white p-4 rounded-2xl border border-slate-200 text-center space-y-3">
       <h4 class="font-bold text-slate-800 text-sm">Berkas Fisik Lembar Pengesahan</h4>
       <p class="text-xs text-slate-500">Dokumen Kesepahaman TA 2026/2027 SMK Prudent School</p>
       
-      <!-- Container Display Gambar Pengesahan -->
       <div class="w-full rounded-xl overflow-hidden border border-slate-200 shadow-sm bg-slate-50 p-2">
-        <!-- Gantilah 'lembar-pengesahan.jpg' dengan nama/path file gambar kamu -->
         <img 
           src="lembar-pengesahan.jpg" 
           alt="Lembar Pengesahan SMK Prudent School" 
           class="w-full h-auto rounded-lg object-contain"
-          onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-8 text-xs text-slate-400 font-medium\'>Gambar lembar pengesahan (lembar-pengesahan.jpg) belum ditempatkan di folder web.</div>';"
+          onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-8 text-xs text-slate-400 font-medium\'>Gambar lembar pengesahan (lembar-pengesahan.jpg) belum ditaruh di folder web.</div>';"
         />
       </div>
     </div>
   `;
-
-  const fileUpload = document.getElementById("fileUpload");
-  const previewImg = document.getElementById("previewImg");
-  const uploadBox = document.getElementById("uploadBox");
-
-  fileUpload.addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        previewImg.src = evt.target.result;
-        previewImg.classList.remove("hidden");
-        uploadBox.classList.add("hidden");
-      };
-      reader.readAsDataURL(file);
-    }
-  });
 }
 
 // Kembali ke Halaman Utama
@@ -439,14 +420,6 @@ function showHalamanUtama() {
     halamanUtama.classList.add("page-enter");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, 150);
-}
-
-// Navigasi Bottom Bar
-function navigateToBab(id) {
-  const targetBab = kesepahamanData.find((b) => b.id === id);
-  if (targetBab) {
-    openBabDetail(targetBab);
-  }
 }
 
 // Live Search
