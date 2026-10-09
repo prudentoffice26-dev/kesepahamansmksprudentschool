@@ -1,6 +1,3 @@
-// =========================================================================
-// DATABASE UTUH KESEPAHAMAN APP (SMK PRUDENT SCHOOL)
-// =========================================================================
 const DATA = [
   // ----------------- MODUL: KETENTUAN UMUM -----------------
   {
@@ -278,6 +275,8 @@ const DATA = [
       "Prudent Perempuan: Aksesoris sederhana. Gelang atau cincin berbahan emas diperbolehkan paling banyak 1 buah."
     ]
   },
+
+  // ----------------- MODUL: KEHADIRAN -----------------
   {
     id: "pasal-22",
     pasal: "Pasal 22",
@@ -314,6 +313,8 @@ const DATA = [
     ],
     poin: []
   },
+
+  // ----------------- MODUL: PENGESAHAN -----------------
   {
     id: "lembar-pengesahan",
     pasal: "Pengesahan",
@@ -336,42 +337,41 @@ const DATA = [
 let currentTab = "Penampilan";
 let searchQuery = "";
 
-// Inisialisasi awal saat dokumen selesai dimuat penuh
-document.addEventListener("DOMContentLoaded", () => {
-  renderCards();
-});
+document.addEventListener("DOMContentLoaded", () => renderCards());
 
 function switchTab(tabName) {
   currentTab = tabName;
   const titleEl = document.getElementById("tabTitle");
   if (titleEl) titleEl.innerText = tabName;
   
-  // Reset Nav Mobile
+  // Reset Bottom Nav Mobile
   document.querySelectorAll(".nav-tab").forEach(tab => {
     tab.classList.remove("text-brand-600", "dark:text-brand-400");
     tab.classList.add("text-slate-400", "dark:text-slate-500");
   });
 
-  // Reset Sidebar PC
+  // Reset Sidebar Desktop
   document.querySelectorAll(".sidebar-tab").forEach(tab => {
-    tab.classList.remove("text-brand-600", "dark:text-brand-400", "bg-brand-50", "dark:bg-brand-950/50");
-    tab.classList.add("text-slate-400", "dark:text-slate-500");
+    tab.classList.remove("text-brand-600", "dark:text-brand-400", "bg-brand-50", "dark:bg-brand-950/70", "border-teal-200/60", "dark:border-teal-500/30");
+    tab.classList.add("text-slate-500", "dark:text-slate-400", "border-transparent");
   });
 
   let tabSuffix = tabName.replace(/\s+/g, '-').replace('&', '');
   if (tabName === "Hak & Peran") tabSuffix = "Hak-Peran";
   if (tabName === "Ketentuan Umum") tabSuffix = "Ketentuan-Umum";
 
+  // Toggle Mobile Active State
   const activeMobileTab = document.getElementById(`tab-${tabSuffix}`);
   if (activeMobileTab) {
     activeMobileTab.classList.remove("text-slate-400", "dark:text-slate-500");
     activeMobileTab.classList.add("text-brand-600", "dark:text-brand-400");
   }
 
+  // Toggle Sidebar Active State
   const activeSidebarTab = document.getElementById(`sidebar-tab-${tabSuffix}`);
   if (activeSidebarTab) {
-    activeSidebarTab.classList.remove("text-slate-400", "dark:text-slate-500");
-    activeSidebarTab.classList.add("text-brand-600", "dark:text-brand-400", "bg-brand-50", "dark:bg-brand-950/50");
+    activeSidebarTab.classList.remove("text-slate-500", "dark:text-slate-400", "border-transparent");
+    activeSidebarTab.classList.add("text-brand-600", "dark:text-brand-400", "bg-brand-50", "dark:bg-brand-950/70", "border-teal-200/60", "dark:border-teal-500/30");
   }
 
   renderCards();
@@ -392,4 +392,115 @@ function renderCards() {
     const matchSearch = searchQuery === "" || 
                         item.judul.toLowerCase().includes(searchQuery) || 
                         item.ringkasan.toLowerCase().includes(searchQuery) ||
-                        (item.poin &&
+                        (item.poin && item.poin.some(p => p.toLowerCase().includes(searchQuery))) ||
+                        (item.tableData && item.tableData.some(t => t.col1.toLowerCase().includes(searchQuery) || t.col2.toLowerCase().includes(searchQuery)));
+    return (searchQuery !== "") ? matchSearch : (matchTab && matchSearch);
+  });
+
+  const cardCountEl = document.getElementById("cardCount");
+  if (cardCountEl) cardCountEl.innerText = `${filtered.length} Aturan`;
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="col-span-full text-center py-12 px-4 animate-card">
+        <p class="text-slate-400 dark:text-slate-500 text-xs font-medium">Tidak ada aturan yang cocok dengan pencarian.</p>
+      </div>
+    `;
+    return;
+  }
+
+  filtered.forEach((item, index) => {
+    const animationDelay = (index * 0.03).toFixed(2);
+    
+    const cardHtml = `
+      <div 
+        onclick="openDetail('${item.id}')" 
+        style="animation-delay: ${animationDelay}s"
+        class="animate-card p-4 bg-white dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl shadow-sm active:scale-[0.98] active:bg-slate-50 dark:active:bg-slate-700/60 transition-all duration-150 cursor-pointer flex flex-col justify-between"
+      >
+        <div>
+          <div class="flex justify-between items-center mb-1.5">
+            <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100">${item.judul}</h3>
+            <svg class="w-4 h-4 text-slate-300 dark:text-slate-600 shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">${item.ringkasan}</p>
+        </div>
+      </div>
+    `;
+    container.insertAdjacentHTML("beforeend", cardHtml);
+  });
+}
+
+function openDetail(id) {
+  const item = DATA.find(d => d.id === id);
+  if (!item) return;
+
+  document.getElementById("detailPasal").innerText = item.pasal || "PASAL";
+  document.getElementById("detailTitle").innerText = item.judul;
+  document.getElementById("detailSummary").innerText = item.ringkasan;
+
+  const pointsContainer = document.getElementById("detailPoints");
+  pointsContainer.innerHTML = "";
+
+  if (item.isTable && item.tableData) {
+    const headers = item.tableHeaders || ["Ketentuan", "Keterangan"];
+    let tableRowsHtml = item.tableData.map((row, idx) => `
+      <tr class="${idx % 2 === 0 ? 'bg-white dark:bg-slate-800' : 'bg-slate-50/80 dark:bg-slate-800/40'}">
+        <td class="py-2.5 px-3.5 font-bold text-slate-800 dark:text-slate-200 border-b border-slate-100 dark:border-slate-700/80 text-xs align-top w-2/5">${row.col1}</td>
+        <td class="py-2.5 px-3.5 text-slate-600 dark:text-slate-300 border-b border-slate-100 dark:border-slate-700/80 text-xs align-top font-medium">${row.col2}</td>
+      </tr>
+    `).join("");
+
+    const tableHtml = `
+      <div class="overflow-hidden rounded-2xl border border-slate-200/80 dark:border-slate-700 shadow-sm animate-card">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-brand-600 dark:bg-brand-700 text-white text-[11px] uppercase tracking-wider font-extrabold">
+              <th class="py-2.5 px-3.5">${headers[0]}</th>
+              <th class="py-2.5 px-3.5">${headers[1]}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tableRowsHtml}
+          </tbody>
+        </table>
+      </div>
+    `;
+    pointsContainer.innerHTML = tableHtml;
+
+  } else if (item.poin) {
+    item.poin.forEach((pointText, index) => {
+      const animationDelay = (index * 0.03).toFixed(2);
+      const pointHtml = `
+        <div 
+          style="animation-delay: ${animationDelay}s" 
+          class="animate-card flex items-start space-x-3 p-3.5 bg-slate-50/80 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700/60 active:bg-slate-100 dark:active:bg-slate-800 transition-colors"
+        >
+          <div class="w-6 h-6 bg-brand-600 dark:bg-brand-500 text-white rounded-lg flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 shadow-sm shadow-brand-500/30">
+            ${index + 1}
+          </div>
+          <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-medium pt-0.5">${pointText}</p>
+        </div>
+      `;
+      pointsContainer.insertAdjacentHTML("beforeend", pointHtml);
+    });
+  }
+
+  const backdrop = document.getElementById("detailBackdrop");
+  if (backdrop) backdrop.classList.remove("hidden");
+
+  const detailModal = document.getElementById("detailView");
+  detailModal.classList.remove("modal-closed");
+  detailModal.classList.add("modal-open");
+}
+
+function closeDetail() {
+  const backdrop = document.getElementById("detailBackdrop");
+  if (backdrop) backdrop.classList.add("hidden");
+
+  const detailModal = document.getElementById("detailView");
+  detailModal.classList.remove("modal-open");
+  detailModal.classList.add("modal-closed");
+}
