@@ -26,10 +26,41 @@
       }
     }
   </script>
-  <style>
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  </style>
+ <style>
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Animasi Masuk Kartu & Poin */
+  @keyframes slideUpFade {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-card {
+    animation: slideUpFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Transisi Modal Detail (Slide-Up Smooth) */
+  .detail-modal {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  }
+  .detail-modal.modal-closed {
+    transform: translateY(100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .detail-modal.modal-open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+</style>
 </head>
 <body class="bg-slate-100 min-h-screen text-slate-800 flex justify-center">
 
@@ -77,7 +108,7 @@
     </main>
 
     <!-- ================= DETAIL VIEW ================= -->
-    <section id="detailView" class="hidden fixed inset-0 bg-white z-40 max-w-md mx-auto flex flex-col overflow-y-auto pb-28">
+    <section id="detailView" class="detail-modal modal-closed fixed inset-0 bg-white z-40 max-w-md mx-auto flex flex-col overflow-y-auto pb-28">
       <div class="sticky top-0 bg-white/95 backdrop-blur-md p-4 border-b border-slate-100 flex items-center space-x-3 z-10">
         <button onclick="closeDetail()" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
