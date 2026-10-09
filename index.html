@@ -1,254 +1,408 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kesepahaman App - SMK Prudent School</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Inter -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
-          colors: {
-            brand: {
-              50: '#F0FDFA',
-              100: '#CCFBF1',
-              400: '#2DD4BF',
-              500: '#14B8A6',
-              600: '#0D9488',
-              700: '#0F766E',
-              950: '#042F2E',
-            }
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+const DATA = [
+  // ----------------- TAB: PENAMPILAN (BAB III) -----------------
+  {
+    id: "pasal-13",
+    pasal: "Pasal 13",
+    modul: "Penampilan",
+    judul: "Ketentuan Baju Seragam",
+    ringkasan: "Menggunakan baju seragam rapi, tidak ketat, lengan panjang, kaos dalam putih, dan wajib dimasukkan ke dalam celana/rok.",
+    poin: [
+      "Menggunakan baju seragam sesuai ukuran, tidak ketat, tidak menggantung, dan tampak rapi.",
+      "Menggunakan baju seragam berlengan panjang sesuai ketentuan sekolah.",
+      "Mengenakan baju seragam dalam keadaan bersih, rapi, tidak robek, dan tidak terdapat coretan/tulisan.",
+      "Wajib menggunakan kaos dalam (singlet) atau kaos berwarna putih leher bulat (crew neck) atau V-neck.",
+      "Panjang lengan kaos dalam tidak melebihi panjang lengan baju seragam.",
+      "Baju seragam wajib dimasukkan ke dalam celana atau rok sehingga ikat pinggang terlihat dengan rapi.",
+      "Baju seragam tetap dimasukkan selama menggunakan atribut, kecuali seragam olahraga."
+    ]
+  },
+  {
+    id: "pasal-14",
+    pasal: "Pasal 14",
+    modul: "Penampilan",
+    judul: "Jadwal Seragam Harian",
+    ringkasan: "Aturan penggunaan pakaian seragam sekolah dari hari Senin sampai Jumat serta jam pelajaran olahraga.",
+    isTable: true,
+    tableHeaders: ["Hari", "Ketentuan Pakaian Seragam"],
+    tableData: [
+      { col1: "Senin", col2: "Seragam putih-putih dengan atribut lengkap" },
+      { col1: "Selasa & Rabu", col2: "Seragam putih abu-abu dengan atribut lengkap" },
+      { col1: "Kamis", col2: "Blazer sekolah (jilbab putih untuk Prudent muslimah)" },
+      { col1: "Jumat", col2: "Seragam putih-hitam (jilbab hitam untuk Prudent muslimah)" },
+      { col1: "Olahraga", col2: "Wajib menggunakan seragam olahraga resmi sekolah" }
+    ],
+    poin: []
+  },
+  {
+    id: "pasal-15",
+    pasal: "Pasal 15",
+    modul: "Penampilan",
+    judul: "Ketentuan Celana & Rok",
+    ringkasan: "Celana panjang model standar dilengkapi ikat pinggang hitam untuk putra, serta rok rempel/huruf A untuk putri.",
+    poin: [
+      "Prudent Laki-laki: Celana panjang model standar sekolah (dilarang model baggy, cargo, pensil).",
+      "Celana wajib dilengkapi dengan ikat pinggang berwarna hitam.",
+      "Prudent Perempuan Rok Putih & Abu-abu: Menggunakan model rempel.",
+      "Prudent Perempuan Rok Hitam: Menggunakan model huruf A.",
+      "Celana atau rok harus bersih, rapi, tidak dimodifikasi, dan sesuai ukuran."
+    ]
+  },
+  {
+    id: "pasal-16",
+    pasal: "Pasal 16",
+    modul: "Penampilan",
+    judul: "Ketentuan Rambut & Hijab",
+    ringkasan: "Rambut putra maksimal 4 cm dan rapi (dilarang mohawk/mullet). Putri wajib menggunakan ciput jilbab / hairnet.",
+    poin: [
+      "Rambut dipotong dengan model wajar, sopan, dan dilarang menggunakan model mullet, mohawk, atau ekstrem.",
+      "Prudent Laki-laki: Rambut rapi, di atas kerah baju, tidak menutupi telinga, bagian atas maksimal 4 cm.",
+      "Prudent Perempuan Berjilbab: Jilbab rapi menutup aurat, rambut tidak terlihat, wajib memakai ciput senada.",
+      "Prudent Perempuan Tidak Berjilbab: Wajib menggunakan hairnet sesuai ketentuan sekolah.",
+      "Rambut tidak diperkenankan diwarnai, dicat, atau dikepang melanggar aturan."
+    ]
+  },
+  {
+    id: "pasal-17",
+    pasal: "Pasal 17",
+    modul: "Penampilan",
+    judul: "Ketentuan Kaos Kaki & Sepatu",
+    ringkasan: "Wajib menggunakan sepatu pantofel hitam selama KBM dan kaos kaki putih polos minimal 7 cm di atas mata kaki.",
+    poin: [
+      "Wajib menggunakan sepatu pantofel berwarna hitam selama KBM (kecuali mata pelajaran olahraga menggunakan sneakers).",
+      "Prudent putri menggunakan sepatu sesuai model yang telah ditetapkan oleh sekolah.",
+      "Menggunakan kaos kaki dengan panjang minimal 7 cm di atas mata kaki.",
+      "Kaos kaki berwarna putih polos (bagian telapak diperbolehkan berwarna hitam).",
+      "Sepatu dan kaos kaki harus dalam keadaan bersih, rapi, dan tidak dimodifikasi."
+    ]
+  },
+  {
+    id: "pasal-18",
+    pasal: "Pasal 18",
+    modul: "Penampilan",
+    judul: "Kelengkapan Atribut & Dispensasi",
+    ringkasan: "Atribut wajib (dasi, name tag, lambang, topi) dan ketentuan permohonan dispensasi maksimal pukul 08.00 WIB.",
+    poin: [
+      "Atribut Wajib: Dasi, Lambang Yayasan SMK Prudent School, Identitas Lokasi, Name Tag, dan Topi Sekolah saat upacara.",
+      "Atribut yang rusak atau hilang wajib segera diganti.",
+      "Dispensasi ketidaklengkapan atribut dapat diberikan paling lambat sampai pukul 08.00 WIB.",
+      "Mengajukan dispensasi setelah pukul 08.00 WIB dinyatakan sebagai pelanggaran kedisiplinan."
+    ]
+  },
+  {
+    id: "pasal-19",
+    pasal: "Pasal 19",
+    modul: "Penampilan",
+    judul: "Standar Riasan (Make-Up) & Aksesori",
+    ringkasan: "Dilarang menggunakan make-up berwarna. Hanya diperbolehkan sunscreen tanpa tone-up dan lip balm polos.",
+    poin: [
+      "Penampilan wajib rapi, bersih, sederhana, sopan, dan mencerminkan budaya kerja profesional.",
+      "Dilarang menggunakan make-up (bedak, BB cream, foundation, lip cream, lipstik berwarna).",
+      "Diperbolehkan hanya: Sunscreen tanpa efek tone-up/matte, dan Lip Balm tanpa warna.",
+      "Prudent Laki-laki dilarang memakai kalung, gelang, cincin, atau anting.",
+      "Prudent Perempuan diperbolehkan memakai gelang/cincin emas paling banyak 1 buah."
+    ]
+  },
 
-    @keyframes slideUpFade {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+  // ----------------- TAB: KEHADIRAN (BAB V) -----------------
+  {
+    id: "pasal-22",
+    pasal: "Pasal 22",
+    modul: "Kehadiran",
+    judul: "Disiplin Kehadiran & Pembiasaan Pagi",
+    ringkasan: "Jam masuk 07.00 WIB (toleransi 07.05 WIB), aturan keterlambatan, perizinan via Prunus DigiApps, dan Jadwal Pembiasaan.",
+    isTable: true,
+    tableHeaders: ["Hari / Jadwal", "Agenda Pembiasaan Pagi (07.00 WIB)"],
+    tableData: [
+      { col1: "Senin Pekan ke-1", col2: "Upacara Bendera" },
+      { col1: "Senin Pekan ke-2", col2: "Pengajian (Muslim) & Kerohanian (Non-muslim)" },
+      { col1: "Senin Pekan ke-3", col2: "Pentas Seni (PENSI)" },
+      { col1: "Senin Pekan ke-4", col2: "Penyuluhan" },
+      { col1: "Selasa", col2: "Kegiatan Literasi" },
+      { col1: "Rabu", col2: "English Day" },
+      { col1: "Kamis", col2: "Kegiatan Numerasi" },
+      { col1: "Jumat", col2: "Pembacaan Asmaul Husna & Kegiatan Kerohanian" }
+    ],
+    poin: [
+      "Jam masuk sekolah pukul 07.00 WIB, dengan batas toleransi keterlambatan pukul 07.05 WIB.",
+      "Hadir setelah pukul 07.05 WIB wajib melapor ke Guru Piket dan dicatat di Prunus DigiApps.",
+      "Terlambat 3 kali: Wajib membuat Surat Pernyataan Komitmen Kedisiplinan.",
+      "Terlambat 4 kali: Pemanggilan orang tua/wali untuk pembinaan bersama.",
+      "Ketidakhadiran sakit/izin wajib diajukan via Prunus DigiApps melampirkan surat bukti yang sah.",
+      "Alpa 3 kali ditindaklanjuti dengan pemanggilan orang tua/wali."
+    ]
+  },
+  {
+    id: "pasal-23-28",
+    pasal: "Pasal 23 - 28",
+    modul: "Kehadiran",
+    judul: "Kebersihan, Transportasi & Pembelajaran",
+    ringkasan: "Aturan piket kelas, ekskul nonkurikuler, larangan knalpot brong, serta penggunaan HP khusus KBM.",
+    poin: [
+      "Kebersihan: Wajib membuang sampah sesuai jenisnya dan melaksanakan piket kelas.",
+      "Nonkurikuler: Wajib mengikuti sekurang-kurangnya 1 dan maksimal 3 kegiatan ekstrakurikuler.",
+      "Transportasi: Wajib memiliki SIM, STNK, helm SNI, dan DILARANG keras menggunakan knalpot bising/brong.",
+      "Pembelajaran: Menjaga kejujuran akademik, tidak plagiarisme, dan mengumpulkan tugas tepat waktu.",
+      "HP/Teknologi: Penggunaan HP wajib atas izin guru untuk pembelajaran dan dikumpulkan sesuai SOP."
+    ]
+  },
 
-    .animate-card {
-      animation: slideUpFade 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
+  // ----------------- TAB: KETENTUAN UMUM (BAB I, IV, X) -----------------
+  {
+    id: "pasal-1-5",
+    pasal: "Pasal 1 - 5",
+    modul: "Ketentuan Umum",
+    judul: "Ketentuan Umum & Visi Sekolah",
+    ringkasan: "Landasan kesepahaman 3 pihak (Sekolah, Prudent, Orang Tua), visi SMK Prudent School, dan 7 prinsip pelaksanaan.",
+    poin: [
+      "Visi Sekolah: Mewujudkan kantor pembelajaran yang berdaya guna untuk menghasilkan lulusan yang berintegritas, mahir, mandiri, dan mampu berkompetisi.",
+      "Melibatkan 3 pihak utama: Pihak Sekolah, Prudent (Professional Student), dan Orang Tua/Wali.",
+      "7 Prinsip Pelaksanaan: Integritas, Disiplin, Profesional, Edukatif, Kolaboratif, Objektif & Berkeadilan, serta Berkelanjutan."
+    ]
+  },
+  {
+    id: "pasal-20-21",
+    pasal: "Pasal 20 - 21",
+    modul: "Ketentuan Umum",
+    judul: "Etika Tutur Kata, Sikap & Larangan Pacaran",
+    ringkasan: "Wajib sapaan profesional 'Bapak/Ibu' saat Office, larangan berpacaran, bullying, merokok, dan miras.",
+    poin: [
+      "Sapaan Profesional: Wajib memanggil 'Bapak' atau 'Ibu' kepada sesama Prudent saat pembelajaran berbasis Office.",
+      "Etika Bahasa: Dilarang menggunakan kata kasar, menghina, perundungan (bullying), ujaran kebencian, dan SARA.",
+      "Larangan Hubungan: Dilarang keras berpacaran atau menjalin hubungan khusus di lingkungan sekolah.",
+      "Larangan Berat: Dilarang merokok, vape, miras, narkoba, tawuran, pencurian, dan vandalisme."
+    ]
+  },
 
-    .detail-modal {
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
-    }
+  // ----------------- TAB: HAK & PERAN (BAB II, VII, VIII, IX) -----------------
+  {
+    id: "pasal-6-12",
+    pasal: "Pasal 6 - 12",
+    modul: "Hak & Peran",
+    judul: "Hak & Kewajiban Tiga Pihak",
+    ringkasan: "Hak dan kewajiban Prudent, Orang Tua/Wali, dan Sekolah serta komitmen bersama membangun budaya kerja DUDIKA.",
+    poin: [
+      "Hak Prudent: Memperoleh layanan pendidikan aman, nyaman, dan perlindungan dari kekerasan/perundungan.",
+      "Kewajiban Prudent: Mematuhi kesepahaman, merawat fasilitas, dan menjaga etika media sosial.",
+      "Kewajiban Orang Tua: Menghadiri panggilan sekolah, mendukung pembinaan, dan mengawasi media digital anak.",
+      "Hak & Kewajiban Sekolah: Berhak memberikan sanksi/pembinaan dan berkewajiban menjamin keselamatan siswa."
+    ]
+  },
+  {
+    id: "pasal-30-34",
+    pasal: "Pasal 30 - 34",
+    modul: "Hak & Peran",
+    judul: "Sanksi, Penghargaan & Peran Orang Tua",
+    ringkasan: "Tahapan sanksi bertahap (SP I - SP III), kriteria Prudent Teladan, dan kemitraan aktif Orang Tua.",
+    poin: [
+      "Tahapan Sanksi: Teguran Lisan (Max 3x) -> Teguran Tertulis -> Pembinaan Mentor/BK -> Kesiswaan -> SP I, SP II, SP III -> Sidang Kedisiplinan.",
+      "Penghargaan: Piagam, Sertifikat, dan Gelar 'Prudent Teladan' bagi siswa yang disiplin dan berprestasi.",
+      "Peran Orang Tua: Bermitra dengan sekolah dalam mengawasi pergaulan dan mendukung program pembinaan edukatif."
+    ]
+  },
+
+  // ----------------- TAB: PENGESAHAN -----------------
+  {
+    id: "lembar-pengesahan",
+    pasal: "Pengesahan",
+    modul: "Pengesahan",
+    judul: "Lembar Pengesahan Dokumen Kesepahaman 2026/2027",
+    ringkasan: "Bukti pengesahan resmi yang ditandatangani oleh Principal, Kesiswaan, Perwakilan Prudent, dan Orang Tua/Wali.",
+    isImage: true,
+    imageUrl: "pengesahan.png",
+    poin: []
+  }
+];
+
+let currentTab = "Penampilan";
+let searchQuery = "";
+
+document.addEventListener("DOMContentLoaded", () => renderCards());
+
+function switchTab(tabName) {
+  currentTab = tabName;
+  const titleEl = document.getElementById("tabTitle");
+  if (titleEl) titleEl.innerText = tabName;
+  
+  // Reset Navigasi Mobile
+  document.querySelectorAll(".nav-tab").forEach(tab => {
+    tab.classList.remove("text-brand-600", "dark:text-brand-400");
+    tab.classList.add("text-slate-400", "dark:text-slate-500");
+  });
+
+  // Reset Navigasi Sidebar Desktop
+  document.querySelectorAll(".sidebar-tab").forEach(tab => {
+    tab.classList.remove("text-brand-600", "dark:text-brand-400", "bg-brand-50", "dark:bg-brand-950/70", "border-teal-200/60", "dark:border-teal-500/30");
+    tab.classList.add("text-slate-500", "dark:text-slate-400", "border-transparent");
+  });
+
+  let tabSuffix = tabName.replace(/\s+/g, '-').replace('&', '');
+  if (tabName === "Hak & Peran") tabSuffix = "Hak-Peran";
+  if (tabName === "Ketentuan Umum") tabSuffix = "Ketentuan-Umum";
+
+  // Aktifkan Navigasi Mobile
+  const activeMobileTab = document.getElementById(`tab-${tabSuffix}`);
+  if (activeMobileTab) {
+    activeMobileTab.classList.remove("text-slate-400", "dark:text-slate-500");
+    activeMobileTab.classList.add("text-brand-600", "dark:text-brand-400");
+  }
+
+  // Aktifkan Navigasi Desktop
+  const activeSidebarTab = document.getElementById(`sidebar-tab-${tabSuffix}`);
+  if (activeSidebarTab) {
+    activeSidebarTab.classList.remove("text-slate-500", "dark:text-slate-400", "border-transparent");
+    activeSidebarTab.classList.add("text-brand-600", "dark:text-brand-400", "bg-brand-50", "dark:bg-brand-950/70", "border-teal-200/60", "dark:border-teal-500/30");
+  }
+
+  renderCards();
+}
+
+function handleSearch(query) {
+  searchQuery = query.toLowerCase().trim();
+  renderCards();
+}
+
+function renderCards() {
+  const container = document.getElementById("cardsContainer");
+  if (!container) return;
+  container.innerHTML = "";
+
+  const filtered = DATA.filter(item => {
+    const matchTab = (item.modul === currentTab);
+    const matchSearch = searchQuery === "" || 
+                        item.judul.toLowerCase().includes(searchQuery) || 
+                        item.ringkasan.toLowerCase().includes(searchQuery) ||
+                        (item.poin && item.poin.some(p => p.toLowerCase().includes(searchQuery))) ||
+                        (item.tableData && item.tableData.some(t => t.col1.toLowerCase().includes(searchQuery) || t.col2.toLowerCase().includes(searchQuery)));
+    return (searchQuery !== "") ? matchSearch : (matchTab && matchSearch);
+  });
+
+  const cardCountEl = document.getElementById("cardCount");
+  if (cardCountEl) cardCountEl.innerText = `${filtered.length} Aturan`;
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="col-span-full text-center py-12 px-4 animate-card">
+        <p class="text-slate-400 dark:text-slate-500 text-xs font-medium">Tidak ada aturan yang cocok dengan pencarian.</p>
+      </div>
+    `;
+    return;
+  }
+
+  filtered.forEach((item, index) => {
+    const animationDelay = (index * 0.03).toFixed(2);
     
-    .detail-modal.modal-closed {
-      transform: translateY(100%);
-      opacity: 0;
-      pointer-events: none;
-    }
-    @media (min-width: 768px) {
-      .detail-modal.modal-closed {
-        transform: translate(-50%, -45%) scale(0.95);
-      }
-    }
-
-    .detail-modal.modal-open {
-      transform: translateY(0);
-      opacity: 1;
-      pointer-events: auto;
-    }
-    @media (min-width: 768px) {
-      .detail-modal.modal-open {
-        transform: translate(-50%, -50%) scale(1);
-      }
-    }
-  </style>
-</head>
-<!-- Body dikunci ukurannya (h-screen overflow-hidden) agar tidak bisa discroll secara utuh -->
-<body class="bg-slate-100 dark:bg-slate-950 h-screen w-screen overflow-hidden text-slate-800 dark:text-slate-100 flex flex-col transition-colors duration-200">
-
-  <!-- APP CONTAINER -->
-  <div class="w-full h-full bg-white dark:bg-slate-900 flex flex-col md:flex-row relative overflow-hidden transition-colors duration-200">
-
-    <!-- DESKTOP SIDEBAR NAV -->
-    <aside class="hidden md:flex flex-col w-72 border-r border-slate-100 dark:border-slate-800/80 p-6 space-y-8 shrink-0 bg-slate-50/50 dark:bg-slate-950/40">
-      <div>
-        <h1 class="font-extrabold text-sm uppercase tracking-wider text-brand-700 dark:text-brand-400">KESEPAHAMAN</h1>
-        <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">SMKS PRUDENT SCHOOL</p>
-      </div>
-
-      <nav class="space-y-2 flex-1">
-        <button onclick="switchTab('Penampilan')" id="sidebar-tab-Penampilan" class="sidebar-tab w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold text-xs border border-teal-200/60 dark:border-teal-500/30 transition-colors text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950/70">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-          </svg>
-          <span>Penampilan</span>
-        </button>
-
-        <button onclick="switchTab('Kehadiran')" id="sidebar-tab-Kehadiran" class="sidebar-tab w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold text-xs border border-transparent transition-colors text-slate-500 dark:text-slate-400">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-          <span>Kehadiran</span>
-        </button>
-
-        <button onclick="switchTab('Ketentuan Umum')" id="sidebar-tab-Ketentuan-Umum" class="sidebar-tab w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold text-xs border border-transparent transition-colors text-slate-500 dark:text-slate-400">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-          </svg>
-          <span>Ketentuan Umum</span>
-        </button>
-
-        <button onclick="switchTab('Hak & Peran')" id="sidebar-tab-Hak-Peran" class="sidebar-tab w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold text-xs border border-transparent transition-colors text-slate-500 dark:text-slate-400">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-          </svg>
-          <span>Hak & Peran</span>
-        </button>
-
-        <button onclick="switchTab('Pengesahan')" id="sidebar-tab-Pengesahan" class="sidebar-tab w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold text-xs border border-transparent transition-colors text-slate-500 dark:text-slate-400">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-          </svg>
-          <span>Pengesahan</span>
-        </button>
-      </nav>
-
-      <div class="pt-4 border-t border-slate-200/60 dark:border-slate-800">
-        <span class="text-[10px] font-semibold text-slate-400 dark:text-slate-500 block">Tahun Ajaran</span>
-        <span class="text-xs font-bold text-brand-700 dark:text-brand-400">2026/2027</span>
-      </div>
-    </aside>
-
-    <!-- RIGHT CONTENT AREA -->
-    <div class="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
-
-      <!-- HEADER BAR (STUCK ON TOP / FIXED) -->
-      <header class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md z-30 border-b border-slate-100 dark:border-slate-800/80 p-4 md:px-8 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-3 shrink-0 shadow-sm">
-        <div class="flex items-center justify-between md:hidden">
-          <div>
-            <h1 class="font-bold text-xs uppercase tracking-wider text-brand-700 dark:text-brand-400">KESEPAHAMAN</h1>
-            <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">SMKS PRUDENT SCHOOL</p>
-          </div>
-          <span class="text-[10px] font-semibold bg-brand-50 dark:bg-brand-950/60 text-brand-700 dark:text-brand-400 px-2.5 py-1 rounded-full border border-brand-200 dark:border-brand-900/60">
-            2026/2027
-          </span>
-        </div>
-
-        <div class="relative w-full">
-          <input 
-            type="text" 
-            id="searchInput" 
-            placeholder="Cari seragam, rambut, atau aturan..." 
-            class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 rounded-2xl text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500"
-            oninput="handleSearch(this.value)"
-          >
-          <svg class="w-4 h-4 text-slate-400 dark:text-slate-500 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-          </svg>
-        </div>
-      </header>
-
-      <!-- MAIN CONTENT (Satu-satunya area yang di-scroll, berjarak dari Bottom Nav HP) -->
-      <main id="listView" class="p-4 md:p-8 flex-1 space-y-4 overflow-y-auto pb-24 md:pb-8 no-scrollbar">
-        <div class="flex justify-between items-center px-1">
-          <h2 id="tabTitle" class="font-extrabold text-lg md:text-2xl text-slate-900 dark:text-slate-100 tracking-tight">Penampilan</h2>
-          <span id="cardCount" class="text-xs text-slate-400 dark:text-slate-500 font-medium">0 Aturan</span>
-        </div>
-
-        <!-- CARDS CONTAINER -->
-        <div id="cardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <!-- Rendered by JS -->
-        </div>
-      </main>
-
-    </div>
-
-    <!-- BACKDROP MODAL DESKTOP -->
-    <div id="detailBackdrop" onclick="closeDetail()" class="fixed inset-0 bg-slate-900/40 dark:bg-black/70 backdrop-blur-sm z-40 hidden transition-opacity"></div>
-
-    <!-- DETAIL VIEW MODAL -->
-    <section id="detailView" class="detail-modal modal-closed fixed inset-0 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 bg-white dark:bg-slate-900 z-50 w-full max-w-md md:max-w-2xl md:h-auto md:max-h-[85vh] md:rounded-3xl shadow-2xl flex flex-col overflow-hidden border-0 md:dark:border md:dark:border-slate-800">
-      
-      <!-- Modal Header -->
-      <div class="sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md p-4 md:px-6 border-b border-slate-100 dark:border-slate-800 flex items-center space-x-3 z-10 shrink-0">
-        <button onclick="closeDetail()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 active:bg-slate-200 dark:active:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
-          </svg>
-        </button>
-        <div class="flex-1 min-w-0">
-          <span id="detailPasal" class="text-[10px] font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950/60 px-2 py-0.5 rounded-md">
-            PASAL
-          </span>
-          <h3 id="detailTitle" class="font-bold text-sm md:text-base text-slate-900 dark:text-slate-100 truncate mt-0.5">Judul Detail</h3>
-        </div>
-      </div>
-
-      <!-- Modal Body -->
-      <div class="p-4 md:p-6 space-y-5 flex-1 overflow-y-auto">
-        <div class="p-4 bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl">
-          <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide mb-1">Deskripsi Lengkap</p>
-          <p id="detailSummary" class="text-xs md:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-medium"></p>
-        </div>
-
+    const cardHtml = `
+      <div 
+        onclick="openDetail('${item.id}')" 
+        style="animation-delay: ${animationDelay}s"
+        class="animate-card p-4 bg-white dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl shadow-sm active:scale-[0.98] active:bg-slate-50 dark:active:bg-slate-700/60 transition-all duration-150 cursor-pointer flex flex-col justify-between"
+      >
         <div>
-          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3 px-1">Poin Aturan Resmi</h4>
-          <div id="detailPoints" class="space-y-3">
-            <!-- Rendered by JS -->
+          <div class="flex justify-between items-center mb-1.5">
+            <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100">${item.judul}</h3>
+            <svg class="w-4 h-4 text-slate-300 dark:text-slate-600 shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
           </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">${item.ringkasan}</p>
         </div>
       </div>
-    </section>
+    `;
+    container.insertAdjacentHTML("beforeend", cardHtml);
+  });
+}
 
-    <!-- FLOATING BOTTOM NAV BAR (Mobile Only) -->
-    <div class="fixed bottom-4 left-0 right-0 z-30 flex justify-center px-3 pointer-events-none md:hidden">
-      <nav class="w-full max-w-md bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200/90 dark:border-slate-800 p-1.5 flex justify-between items-center rounded-2xl shadow-xl shadow-slate-900/20 pointer-events-auto transition-colors duration-200">
-        
-        <button onclick="switchTab('Penampilan')" id="tab-Penampilan" class="nav-tab flex-1 min-w-0 flex flex-col items-center py-1 px-1 rounded-xl transition-colors text-brand-600 dark:text-brand-400">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-          </svg>
-          <span class="text-[8px] font-bold tracking-tighter truncate w-full text-center mt-1">Penampilan</span>
-        </button>
+function openDetail(id) {
+  const item = DATA.find(d => d.id === id);
+  if (!item) return;
 
-        <button onclick="switchTab('Kehadiran')" id="tab-Kehadiran" class="nav-tab flex-1 min-w-0 flex flex-col items-center py-1 px-1 rounded-xl transition-colors text-slate-400 dark:text-slate-500">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-          <span class="text-[8px] font-bold tracking-tighter truncate w-full text-center mt-1">Kehadiran</span>
-        </button>
+  document.getElementById("detailPasal").innerText = item.pasal || "PASAL";
+  document.getElementById("detailTitle").innerText = item.judul;
+  document.getElementById("detailSummary").innerText = item.ringkasan;
 
-        <button onclick="switchTab('Ketentuan Umum')" id="tab-Ketentuan-Umum" class="nav-tab flex-1 min-w-0 flex flex-col items-center py-1 px-1 rounded-xl transition-colors text-slate-400 dark:text-slate-500">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-          </svg>
-          <span class="text-[8px] font-bold tracking-tighter truncate w-full text-center mt-1">Umum</span>
-        </button>
+  const pointsContainer = document.getElementById("detailPoints");
+  pointsContainer.innerHTML = "";
 
-        <button onclick="switchTab('Hak & Peran')" id="tab-Hak-Peran" class="nav-tab flex-1 min-w-0 flex flex-col items-center py-1 px-1 rounded-xl transition-colors text-slate-400 dark:text-slate-500">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-          </svg>
-          <span class="text-[8px] font-bold tracking-tighter truncate w-full text-center mt-1">Hak & Peran</span>
-        </button>
+  if (item.isImage) {
+    pointsContainer.innerHTML = `
+      <div class="overflow-hidden rounded-2xl border border-slate-200/80 dark:border-slate-700 shadow-sm animate-card bg-slate-50 dark:bg-slate-800 p-2 text-center">
+        <img 
+          src="${item.imageUrl}" 
+          alt="${item.judul}" 
+          class="w-full h-auto rounded-xl object-contain mx-auto"
+          onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'py-10 px-4 text-center\'><p class=\'text-xs text-slate-400 dark:text-slate-500 font-bold\'>[ Gambar Lembar Pengesahan ]</p><p class=\'text-[10px] text-slate-400 mt-1\'>Pastikan file pengesahan.png sudah ditaruh di folder yang sama dengan index.html</p></div>';"
+        />
+      </div>
+    `;
+  } else if (item.isTable && item.tableData) {
+    const headers = item.tableHeaders || ["Ketentuan", "Keterangan"];
+    let tableRowsHtml = item.tableData.map((row, idx) => `
+      <tr class="${idx % 2 === 0 ? 'bg-white dark:bg-slate-800' : 'bg-slate-50/80 dark:bg-slate-800/40'}">
+        <td class="py-2.5 px-3.5 font-bold text-slate-800 dark:text-slate-200 border-b border-slate-100 dark:border-slate-700/80 text-xs align-top w-2/5">${row.col1}</td>
+        <td class="py-2.5 px-3.5 text-slate-600 dark:text-slate-300 border-b border-slate-100 dark:border-slate-700/80 text-xs align-top font-medium">${row.col2}</td>
+      </tr>
+    `).join("");
 
-        <button onclick="switchTab('Pengesahan')" id="tab-Pengesahan" class="nav-tab flex-1 min-w-0 flex flex-col items-center py-1 px-1 rounded-xl transition-colors text-slate-400 dark:text-slate-500">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-          </svg>
-          <span class="text-[8px] font-bold tracking-tighter truncate w-full text-center mt-1">Pengesahan</span>
-        </button>
+    let pointsHeaderHtml = "";
+    if (item.poin && item.poin.length > 0) {
+      const pointsList = item.poin.map((p, idx) => `
+        <div class="flex items-start space-x-3 p-3 bg-slate-50/80 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700/60">
+          <div class="w-5 h-5 bg-brand-600 dark:bg-brand-500 text-white rounded-md flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">${idx + 1}</div>
+          <p class="text-xs text-slate-700 dark:text-slate-300 font-medium">${p}</p>
+        </div>
+      `).join("");
+      pointsHeaderHtml = `<div class="space-y-2 mb-4">${pointsList}</div>`;
+    }
 
-      </nav>
-    </div>
+    const tableHtml = `
+      ${pointsHeaderHtml}
+      <div class="overflow-hidden rounded-2xl border border-slate-200/80 dark:border-slate-700 shadow-sm animate-card">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-brand-600 dark:bg-brand-700 text-white text-[11px] uppercase tracking-wider font-extrabold">
+              <th class="py-2.5 px-3.5">${headers[0]}</th>
+              <th class="py-2.5 px-3.5">${headers[1]}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tableRowsHtml}
+          </tbody>
+        </table>
+      </div>
+    `;
+    pointsContainer.innerHTML = tableHtml;
 
-  </div>
+  } else if (item.poin) {
+    item.poin.forEach((pointText, index) => {
+      const animationDelay = (index * 0.03).toFixed(2);
+      const pointHtml = `
+        <div 
+          style="animation-delay: ${animationDelay}s" 
+          class="animate-card flex items-start space-x-3 p-3.5 bg-slate-50/80 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700/60 active:bg-slate-100 dark:active:bg-slate-800 transition-colors"
+        >
+          <div class="w-6 h-6 bg-brand-600 dark:bg-brand-500 text-white rounded-lg flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 shadow-sm shadow-brand-500/30">
+            ${index + 1}
+          </div>
+          <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-medium pt-0.5">${pointText}</p>
+        </div>
+      `;
+      pointsContainer.insertAdjacentHTML("beforeend", pointHtml);
+    });
+  }
 
-  <script src="JS.js"></script>
-</body>
-</html>
+  const backdrop = document.getElementById("detailBackdrop");
+  if (backdrop) backdrop.classList.remove("hidden");
+
+  const detailModal = document.getElementById("detailView");
+  detailModal.classList.remove("modal-closed");
+  detailModal.classList.add("modal-open");
+}
+
+function closeDetail() {
+  const backdrop = document.getElementById("detailBackdrop");
+  if (backdrop) backdrop.classList.add("hidden");
+
+  const detailModal = document.getElementById("detailView");
+  detailModal.classList.remove("modal-open");
+  detailModal.classList.add("modal-closed");
+}
