@@ -384,6 +384,40 @@ function renderCards() {
 
   if(filtered.length === 0) {
     container.innerHTML = `
+      <div class="text-center py-12 px-4 animate-card">
+        <p class="text-slate-400 text-xs font-medium">Tidak ada aturan yang cocok dengan pencarian.</p>
+      </div>
+    `;
+    return;
+  }
+
+  filtered.forEach((item, index) => {
+    // Staggered delay agar kartu muncul berurutan
+    const animationDelay = (index * 0.05).toFixed(2);
+    
+    const cardHtml = `
+      <div 
+        onclick="openDetail('${item.id}')" 
+        style="animation-delay: ${animationDelay}s"
+        class="animate-card opacity-0 p-4 bg-white border border-slate-200/80 rounded-2xl shadow-sm hover:border-brand-500 active:scale-[0.97] active:bg-slate-50 transition-all duration-200 cursor-pointer group"
+      >
+        <div class="flex justify-between items-center mb-1">
+          <h3 class="font-bold text-sm text-slate-900 group-hover:text-brand-600 transition-colors">${item.judul}</h3>
+          <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-500 group-hover:translate-x-1 transition-all duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+        <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">${item.ringkasan}</p>
+      </div>
+    `;
+    container.insertAdjacentHTML("beforeend", cardHtml);
+  });
+}
+
+  document.getElementById("cardCount").innerText = `${filtered.length} Aturan`;
+
+  if(filtered.length === 0) {
+    container.innerHTML = `
       <div class="text-center py-12 px-4">
         <p class="text-slate-400 text-xs font-medium">Tidak ada aturan yang cocok dengan pencarian.</p>
       </div>
@@ -418,7 +452,6 @@ function openDetail(id) {
   const pointsContainer = document.getElementById("detailPoints");
   pointsContainer.innerHTML = "";
 
-  // Render Tabel jika isTable true
   if (item.isTable && item.tableData) {
     const headers = item.tableHeaders || ["Ketentuan", "Keterangan"];
     let tableRowsHtml = item.tableData.map((row, idx) => `
@@ -429,7 +462,7 @@ function openDetail(id) {
     `).join("");
 
     const tableHtml = `
-      <div class="overflow-hidden rounded-2xl border border-slate-200/80 shadow-sm">
+      <div class="overflow-hidden rounded-2xl border border-slate-200/80 shadow-sm animate-card">
         <table class="w-full text-left border-collapse">
           <thead>
             <tr class="bg-brand-600 text-white text-[11px] uppercase tracking-wider font-extrabold">
@@ -445,11 +478,14 @@ function openDetail(id) {
     `;
     pointsContainer.innerHTML = tableHtml;
 
-  // Render Poin Berangka Biasa
   } else if (item.poin) {
     item.poin.forEach((pointText, index) => {
+      const animationDelay = (index * 0.04).toFixed(2);
       const pointHtml = `
-        <div class="flex items-start space-x-3 p-3.5 bg-slate-50/80 rounded-xl border border-slate-100">
+        <div 
+          style="animation-delay: ${animationDelay}s" 
+          class="animate-card opacity-0 flex items-start space-x-3 p-3.5 bg-slate-50/80 rounded-xl border border-slate-100 active:bg-slate-100 transition-colors"
+        >
           <div class="w-6 h-6 bg-brand-600 text-white rounded-lg flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 shadow-sm shadow-brand-500/30">
             ${index + 1}
           </div>
@@ -460,9 +496,14 @@ function openDetail(id) {
     });
   }
 
-  document.getElementById("detailView").classList.remove("hidden");
+  // Tampilkan modal dengan animasi slide-up
+  const detailModal = document.getElementById("detailView");
+  detailModal.classList.remove("modal-closed");
+  detailModal.classList.add("modal-open");
 }
 
 function closeDetail() {
-  document.getElementById("detailView").classList.add("hidden");
+  const detailModal = document.getElementById("detailView");
+  detailModal.classList.remove("modal-open");
+  detailModal.classList.add("modal-closed");
 }
