@@ -1,6 +1,3 @@
-// =========================================================================
-// DATABASE UTUH KESEPAHAMAN APP (SMK PRUDENT SCHOOL)
-// =========================================================================
 const DATA = [
   // ----------------- MODUL: KETENTUAN UMUM -----------------
   {
@@ -337,27 +334,33 @@ const DATA = [
   }
 ];
 
-// =========================================================================
-// LOGIKA SISTEM & INTERAKSI APLIKASI
-// =========================================================================
 let currentTab = "Penampilan";
 let searchQuery = "";
 
 document.addEventListener("DOMContentLoaded", () => renderCards());
 
+// NAV BAR INTERACTION & STYLING
 function switchTab(tabName) {
   currentTab = tabName;
   document.getElementById("tabTitle").innerText = tabName;
   
+  // Set semua tab ke warna non-aktif (abu-abu)
   document.querySelectorAll(".nav-tab").forEach(tab => {
     tab.classList.remove("text-brand-600");
     tab.classList.add("text-slate-400");
   });
-  const activeTab = document.getElementById(`tab-${tabName}`);
-  if(activeTab) {
+
+  // Sanitasi ID Tab agar sesuai dengan HTML
+  let tabId = `tab-${tabName.replace(/\s+/g, '-').replace('&', '')}`;
+  if (tabName === "Hak & Peran") tabId = "tab-Hak-Peran";
+  if (tabName === "Ketentuan Umum") tabId = "tab-Ketentuan-Umum";
+
+  const activeTab = document.getElementById(tabId);
+  if (activeTab) {
     activeTab.classList.remove("text-slate-400");
     activeTab.classList.add("text-brand-600");
   }
+
   renderCards();
 }
 
@@ -366,8 +369,10 @@ function handleSearch(query) {
   renderCards();
 }
 
+// RENDER KARTU
 function renderCards() {
   const container = document.getElementById("cardsContainer");
+  if (!container) return;
   container.innerHTML = "";
 
   const filtered = DATA.filter(item => {
@@ -382,7 +387,7 @@ function renderCards() {
 
   document.getElementById("cardCount").innerText = `${filtered.length} Aturan`;
 
-  if(filtered.length === 0) {
+  if (filtered.length === 0) {
     container.innerHTML = `
       <div class="text-center py-12 px-4 animate-card">
         <p class="text-slate-400 text-xs font-medium">Tidak ada aturan yang cocok dengan pencarian.</p>
@@ -392,7 +397,7 @@ function renderCards() {
   }
 
   filtered.forEach((item, index) => {
-    const animationDelay = (index * 0.04).toFixed(2);
+    const animationDelay = (index * 0.03).toFixed(2);
     
     const cardHtml = `
       <div 
@@ -402,7 +407,7 @@ function renderCards() {
       >
         <div class="flex justify-between items-center mb-1">
           <h3 class="font-bold text-sm text-slate-900 group-hover:text-brand-600 transition-colors">${item.judul}</h3>
-          <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-500 transition-all duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-500 transition-all duration-150" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
           </svg>
         </div>
@@ -413,9 +418,10 @@ function renderCards() {
   });
 }
 
+// BUKA & TUTUP DETAIL
 function openDetail(id) {
   const item = DATA.find(d => d.id === id);
-  if(!item) return;
+  if (!item) return;
 
   document.getElementById("detailPasal").innerText = item.pasal || "PASAL";
   document.getElementById("detailTitle").innerText = item.judul;
@@ -468,7 +474,6 @@ function openDetail(id) {
     });
   }
 
-  // Tampilkan modal dengan animasi slide-up
   const detailModal = document.getElementById("detailView");
   detailModal.classList.remove("modal-closed");
   detailModal.classList.add("modal-open");
