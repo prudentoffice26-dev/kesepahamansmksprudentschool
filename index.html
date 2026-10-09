@@ -1,307 +1,39 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kesepahaman App - SMK Prudent School</title>
+  <title>Dokumen Kesepahaman SMK Prudent School</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Inter -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
-          colors: {
-            brand: {
-              50: '#F0FDFA',
-              100: '#CCFBF1',
-              400: '#2DD4BF',
-              500: '#14B8A6',
-              600: '#0D9488',
-              700: '#0F766E',
-              950: '#042F2E',
-            }
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-
-    @keyframes slideUpFade {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .animate-card {
-      animation: slideUpFade 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-
-    .detail-modal {
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
-    }
-
-    .detail-modal.modal-closed {
-      transform: translateY(100%);
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    @media (min-width: 768px) {
-      .detail-modal.modal-closed {
-        transform: translate(-50%, -45%) scale(0.95);
-      }
-    }
-
-    .detail-modal.modal-open {
-      transform: translateY(0);
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    @media (min-width: 768px) {
-      .detail-modal.modal-open {
-        transform: translate(-50%, -50%) scale(1);
-      }
-    }
-  </style>
 </head>
-<!-- Body dikunci ukurannya (h-screen overflow-hidden) agar tidak bisa discroll secara utuh -->
+<body class="min-h-screen bg-slate-50 text-slate-800 font-sans p-4 sm:p-6 lg:p-10">
 
-<body
-  class="bg-slate-100 dark:bg-slate-950 h-screen w-screen overflow-hidden text-slate-800 dark:text-slate-100 flex flex-col transition-colors duration-200">
+  <!-- Header Utama -->
+  <header class="max-w-7xl mx-auto mb-8 text-center bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
+    <h1 id="app-title" class="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-[#00639A] uppercase">
+      DOKUMEN KESEPAHAMAN SMK PRUDENT SCHOOL TAHUN AJARAN 2026/2027
+    </h1>
+    <p class="mt-2 text-sm sm:text-base text-slate-500 font-medium">
+      Sistem Informasi & Panduan Budaya Kerja Profesional SMK Prudent School
+    </p>
+  </header>
 
-  <!-- APP CONTAINER -->
-  <div
-    class="w-full h-full bg-white dark:bg-slate-900 flex flex-col md:flex-row relative overflow-hidden transition-colors duration-200">
-
-    <!-- DESKTOP SIDEBAR NAV -->
-    <aside
-      class="hidden md:flex flex-col w-72 border-r border-slate-100 dark:border-slate-800/80 p-6 space-y-8 shrink-0 bg-slate-50/50 dark:bg-slate-950/40">
-      <div>
-        <h1 class="font-extrabold text-sm uppercase tracking-wider text-brand-700 dark:text-brand-400">KESEPAHAMAN</h1>
-        <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">SMKS PRUDENT SCHOOL</p>
-      </div>
-
-      <nav class="space-y-2 flex-1">
-        <button onclick="switchTab('Penampilan')" id="sidebar-tab-Penampilan"
-          class="sidebar-tab w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold text-xs border border-teal-200/60 dark:border-teal-500/30 transition-colors text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950/70">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-          <span>Penampilan</span>
-        </button>
-
-        <button onclick="switchTab('Kehadiran')" id="sidebar-tab-Kehadiran"
-          class="sidebar-tab w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold text-xs border border-transparent transition-colors text-slate-500 dark:text-slate-400">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <span>Kehadiran</span>
-        </button>
-
-        <button onclick="switchTab('Ketentuan Umum')" id="sidebar-tab-Ketentuan-Umum"
-          class="sidebar-tab w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold text-xs border border-transparent transition-colors text-slate-500 dark:text-slate-400">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-          <span>Ketentuan Umum</span>
-        </button>
-
-        <button onclick="switchTab('Hak & Peran')" id="sidebar-tab-Hak-Peran"
-          class="sidebar-tab w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold text-xs border border-transparent transition-colors text-slate-500 dark:text-slate-400">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-          </svg>
-          <span>Hak & Peran</span>
-        </button>
-
-        <button onclick="switchTab('Pengesahan')" id="sidebar-tab-Pengesahan"
-          class="sidebar-tab w-full flex items-center space-x-3 px-4 py-3 rounded-2xl font-bold text-xs border border-transparent transition-colors text-slate-500 dark:text-slate-400">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-          </svg>
-          <span>Pengesahan</span>
-        </button>
-      </nav>
-
-      <div class="pt-4 border-t border-slate-200/60 dark:border-slate-800">
-        <span class="text-[10px] font-semibold text-slate-400 dark:text-slate-500 block">Tahun Ajaran</span>
-        <span class="text-xs font-bold text-brand-700 dark:text-brand-400">2026/2027</span>
-      </div>
-    </aside>
-
-    <!-- RIGHT CONTENT AREA -->
-    <div class="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
-
-      <!-- HEADER BAR (STUCK ON TOP / FIXED) -->
-      <header
-        class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md z-30 border-b border-slate-100 dark:border-slate-800/80 p-4 md:px-8 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-3 shrink-0 shadow-sm">
-        <div class="flex items-center justify-between md:hidden">
-          <div>
-            <h1 class="font-bold text-xs uppercase tracking-wider text-brand-700 dark:text-brand-400">KESEPAHAMAN</h1>
-            <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">SMKS PRUDENT SCHOOL</p>
-          </div>
-          <span
-            class="text-[10px] font-semibold bg-brand-50 dark:bg-brand-950/60 text-brand-700 dark:text-brand-400 px-2.5 py-1 rounded-full border border-brand-200 dark:border-brand-900/60">
-            2026/2027
-          </span>
-        </div>
-
-        <div class="relative w-full">
-          <input type="text" id="searchInput" placeholder="Cari seragam, rambut, atau aturan..."
-            class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 rounded-2xl text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500"
-            oninput="handleSearch(this.value)">
-          <svg class="w-4 h-4 text-slate-400 dark:text-slate-500 absolute left-3.5 top-3" fill="none"
-            stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-        </div>
-      </header>
-
-      <!-- MAIN CONTENT (Satu-satunya area yang di-scroll, berjarak dari Bottom Nav HP) -->
-      <main id="listView" class="p-4 md:p-8 flex-1 space-y-4 overflow-y-auto pb-24 md:pb-8 no-scrollbar">
-        <div class="flex justify-between items-center px-1">
-          <h2 id="tabTitle"
-            class="font-extrabold text-lg md:text-2xl text-slate-900 dark:text-slate-100 tracking-tight">Penampilan</h2>
-          <span id="cardCount" class="text-xs text-slate-400 dark:text-slate-500 font-medium">0 Aturan</span>
-        </div>
-
-        <!-- CARDS CONTAINER -->
-        <div id="cardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <!-- Rendered by JS -->
-        </div>
-      </main>
-
+  <!-- Container Navigasi Tab -->
+  <div class="max-w-7xl mx-auto mb-8">
+    <div id="tabs-container" class="flex overflow-x-auto space-x-2 pb-2 scrollbar-thin scrollbar-thumb-slate-300">
+      <!-- Tabs akan di-render dinamis oleh app.js -->
     </div>
-
-    <!-- BACKDROP MODAL DESKTOP -->
-    <div id="detailBackdrop" onclick="closeDetail()"
-      class="fixed inset-0 bg-slate-900/40 dark:bg-black/70 backdrop-blur-sm z-40 hidden transition-opacity"></div>
-
-    <!-- DETAIL VIEW MODAL -->
-    <section id="detailView"
-      class="detail-modal modal-closed fixed inset-0 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 bg-white dark:bg-slate-900 z-50 w-full max-w-md md:max-w-2xl md:h-auto md:max-h-[85vh] md:rounded-3xl shadow-2xl flex flex-col overflow-hidden border-0 md:dark:border md:dark:border-slate-800">
-
-      <!-- Modal Header -->
-      <div
-        class="sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md p-4 md:px-6 border-b border-slate-100 dark:border-slate-800 flex items-center space-x-3 z-10 shrink-0">
-        <button onclick="closeDetail()"
-          class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 active:bg-slate-200 dark:active:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        <div class="flex-1 min-w-0">
-          <span id="detailPasal"
-            class="text-[10px] font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950/60 px-2 py-0.5 rounded-md">
-            PASAL
-          </span>
-          <h3 id="detailTitle"
-            class="font-bold text-sm md:text-base text-slate-900 dark:text-slate-100 truncate mt-0.5">Judul Detail</h3>
-        </div>
-      </div>
-
-      <!-- Modal Body -->
-      <div class="p-4 md:p-6 space-y-5 flex-1 overflow-y-auto">
-        <div
-          class="p-4 bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl">
-          <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide mb-1">Deskripsi
-            Lengkap</p>
-          <p id="detailSummary"
-            class="text-xs md:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-medium"></p>
-        </div>
-
-        <div>
-          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3 px-1">Poin
-            Aturan Resmi</h4>
-          <div id="detailPoints" class="space-y-3">
-            <!-- Rendered by JS -->
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FLOATING BOTTOM NAV BAR (Mobile Only) -->
-    <div class="fixed bottom-4 left-0 right-0 z-30 flex justify-center px-3 pointer-events-none md:hidden">
-      <nav
-        class="w-full max-w-md bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200/90 dark:border-slate-800 p-1.5 flex justify-between items-center rounded-2xl shadow-xl shadow-slate-900/20 pointer-events-auto transition-colors duration-200">
-
-        <button onclick="switchTab('Penampilan')" id="tab-Penampilan"
-          class="nav-tab flex-1 min-w-0 flex flex-col items-center py-1 px-1 rounded-xl transition-colors text-brand-600 dark:text-brand-400">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-          <span class="text-[8px] font-bold tracking-tighter truncate w-full text-center mt-1">Penampilan</span>
-        </button>
-
-        <button onclick="switchTab('Kehadiran')" id="tab-Kehadiran"
-          class="nav-tab flex-1 min-w-0 flex flex-col items-center py-1 px-1 rounded-xl transition-colors text-slate-400 dark:text-slate-500">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <span class="text-[8px] font-bold tracking-tighter truncate w-full text-center mt-1">Kehadiran</span>
-        </button>
-
-        <button onclick="switchTab('Ketentuan Umum')" id="tab-Ketentuan-Umum"
-          class="nav-tab flex-1 min-w-0 flex flex-col items-center py-1 px-1 rounded-xl transition-colors text-slate-400 dark:text-slate-500">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-          <span class="text-[8px] font-bold tracking-tighter truncate w-full text-center mt-1">Umum</span>
-        </button>
-
-        <button onclick="switchTab('Hak & Peran')" id="tab-Hak-Peran"
-          class="nav-tab flex-1 min-w-0 flex flex-col items-center py-1 px-1 rounded-xl transition-colors text-slate-400 dark:text-slate-500">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-          </svg>
-          <span class="text-[8px] font-bold tracking-tighter truncate w-full text-center mt-1">Hak & Peran</span>
-        </button>
-
-        <button onclick="switchTab('Pengesahan')" id="tab-Pengesahan"
-          class="nav-tab flex-1 min-w-0 flex flex-col items-center py-1 px-1 rounded-xl transition-colors text-slate-400 dark:text-slate-500">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-          </svg>
-          <span class="text-[8px] font-bold tracking-tighter truncate w-full text-center mt-1">Pengesahan</span>
-        </button>
-
-      </nav>
-    </div>
-
   </div>
 
+  <!-- Konten Utama Berdasarkan Tab Active -->
+  <main className="max-w-7xl mx-auto">
+    <section id="tab-content" class="max-w-7xl mx-auto">
+      <!-- Konten pasal & bab akan di-render dinamis oleh app.js -->
+    </section>
+  </main>
+
+  <!-- External JS Script -->
   <script src="JS.js"></script>
 </body>
-
 </html>
