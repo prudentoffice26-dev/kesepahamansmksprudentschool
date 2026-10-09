@@ -2,146 +2,176 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kesepahaman App - SMK Prudent School</title>
-  <!-- Tailwind CSS via CDN -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Kesepahaman SMK Prudent School</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Inter -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            brand: {
-              50: '#f0fdfa',
-              100: '#ccfbf1',
-              500: '#14b8a6',
-              600: '#0d9488',
-              700: '#0f766e',
+            prudent: {
+              teal: '#00B4B6',
+              blue: '#0F6292',
+              darkBlue: '#0A3959',
+              lightBg: '#E8F6F8',
+              cardBg: '#FFFFFF'
             }
           },
           fontFamily: {
-            sans: ['Inter', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
           }
         }
       }
     }
   </script>
   <style>
-    /* Custom Transitions & Micro-interactions */
+    body {
+      background: linear-gradient(180deg, #E8F6F8 0%, #F4FAF9 100%);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Page Transitions */
     .page-enter {
-      animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: fadeInSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     .page-exit {
-      animation: slideOutRight 0.25s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+      animation: fadeOutSlide 0.2s cubic-bezier(0.7, 0, 0.84, 0) forwards;
     }
 
-    @keyframes slideInRight {
-      from { opacity: 0; transform: translateX(20px); }
-      to { opacity: 1; transform: translateX(0); }
+    @keyframes fadeInSlide {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes slideOutRight {
-      from { opacity: 1; transform: translateX(0); }
-      to { opacity: 0; transform: translateX(-20px); }
-    }
-
-    /* Chevron rotation for accordion */
-    .accordion-icon {
-      transition: transform 0.3s ease;
-    }
-    .accordion-open .accordion-icon {
-      transform: rotate(180deg);
+    @keyframes fadeOutSlide {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(-12px); }
     }
 
-    /* Accordion Content Smooth Toggle */
-    .accordion-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s cubic-bezier(0, 1, 0, 1), opacity 0.3s ease;
-      opacity: 0;
-    }
-    .accordion-open .accordion-content {
-      max-height: 2000px;
-      opacity: 1;
-      transition: max-height 0.5s ease-in-out, opacity 0.35s ease;
+    /* Micro-interactions: Mobile Press state without Desktop Sticky Hover */
+    .active-press:active {
+      transform: scale(0.98);
+      opacity: 0.9;
     }
 
-    /* Hover effects only for pointer devices (Desktop) */
-    @media (hover: hover) and (pointer: fine) {
-      .btn-hover:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-      }
-      .card-hover:hover {
-        border-color: #14b8a6;
-      }
-    }
-
-    /* Active Press Micro-interaction (Mobile & Desktop) */
-    .btn-press:active {
-      transform: scale(0.97);
-    }
+    /* Hide scrollbar */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased">
+<body class="text-slate-800 min-h-screen flex flex-col justify-between pb-24">
 
-  <!-- Header Banner -->
-  <header class="bg-brand-500 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-2xl mx-auto px-4 py-4 text-center">
-      <h1 class="text-xl md:text-2xl font-bold tracking-wide">Kesepahaman App</h1>
-      <p class="text-xs md:text-sm text-brand-100 mt-0.5">SMK Prudent School TA 2026/2027</p>
+  <!-- ================= TOP HEADER ================= -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-teal-100 shadow-sm px-4 py-3">
+    <div class="max-w-md mx-auto flex items-center justify-between gap-3">
+      <!-- Logo Branding -->
+      <div class="flex items-center gap-2 cursor-pointer" onclick="showHalamanUtama()">
+        <div class="leading-none">
+          <h1 class="text-xs font-black tracking-widest text-prudent-teal uppercase">KESEPAHAMAN</h1>
+          <p class="text-[9px] font-bold text-prudent-blue tracking-tight">SMKS PRUDENT SCHOOL</p>
+        </div>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="relative flex-1 max-w-[200px]">
+        <input 
+          type="text" 
+          id="searchInput"
+          placeholder="Cari..." 
+          class="w-full bg-slate-100 text-xs text-slate-700 pl-8 pr-3 py-1.5 rounded-full border border-slate-200 focus:outline-none focus:border-prudent-teal focus:bg-white transition-all"
+        />
+        <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+      </div>
     </div>
   </header>
 
-  <!-- Main Container -->
-  <main class="flex-1 max-w-2xl w-full mx-auto p-4 md:p-6 relative overflow-x-hidden">
+  <!-- ================= MAIN CONTAINER ================= -->
+  <main class="max-w-md w-full mx-auto px-4 pt-4 flex-1">
 
-    <!-- ================= HALAMAN UTAMA ================= -->
+    <!-- FRAME 6: HALAMAN UTAMA (LIST BAB / CARDS) -->
     <section id="halamanUtama" class="space-y-4 page-enter">
-      <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6">
-        <h2 class="text-lg font-bold text-slate-800 mb-1">Daftar Dokumen Kesepahaman</h2>
-        <p class="text-xs text-slate-500">Pilih BAB di bawah ini untuk melihat detail pasal, tata tertib, dan ketentuan lengkap.</p>
-      </div>
-
-      <!-- List BAB Buttons -->
-      <div id="babList" class="grid gap-3">
-        <!-- Rendered dynamically by app.js -->
+      <div id="babCardList" class="space-y-3.5">
+        <!-- Rendered by app.js -->
       </div>
     </section>
 
-    <!-- ================= HALAMAN PENJELASAN BAB ================= -->
-    <section id="halamanPenjelasan" class="hidden space-y-5">
-      <!-- Top Navigation / Button Back -->
-      <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-        <button id="btnBack" class="inline-flex items-center gap-2 px-3 py-2 text-sm font-semibold text-brand-700 bg-brand-50 rounded-lg border border-brand-200 btn-hover btn-press transition-all">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-          </svg>
-          Kembali ke Halaman Utama
-        </button>
+    <!-- FRAME 7: HALAMAN PENJELASAN BAB / DETAIL -->
+    <section id="halamanPenjelasan" class="hidden space-y-4">
+      <!-- Top Navigation Detail -->
+      <button id="btnBack" class="flex items-center gap-2 text-slate-800 font-extrabold text-lg tracking-tight active-press py-1">
+        <svg class="w-6 h-6 text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
+        </svg>
+        <span id="detailBabTitle" class="uppercase">LOREM IPSUM</span>
+      </button>
+
+      <!-- Deskripsi/Paragraf Utama BAB -->
+      <div class="bg-white/80 p-4 rounded-2xl border border-slate-100 shadow-sm">
+        <p id="detailBabDeskripsi" class="text-xs md:text-sm text-slate-600 leading-relaxed font-medium">
+          <!-- Text deskripsi bab -->
+        </p>
       </div>
 
-      <!-- Judul BAB -->
-      <div class="bg-brand-50 border-l-4 border-brand-500 p-4 rounded-r-xl">
-        <h2 id="babTitle" class="text-lg md:text-xl font-bold text-slate-900">Judul BAB</h2>
-        <p id="babSubtitle" class="text-xs text-brand-700 mt-1 uppercase tracking-wider font-semibold">Sub-Judul BAB</p>
-      </div>
-
-      <!-- Container Card Pasal (Dropdowns) -->
-      <div id="pasalContainer" class="space-y-3">
-        <!-- Card Pasal items will be rendered dynamically -->
+      <!-- Container Poin-poin / Card Pasal -->
+      <div id="detailPasalContainer" class="space-y-3">
+        <!-- Rendered by app.js -->
       </div>
     </section>
 
   </main>
 
-  <!-- Footer -->
-  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400 mt-auto">
-    &copy; 2026 SMK Prudent School. All Rights Reserved.
-  </footer>
+  <!-- ================= BOTTOM NAVIGATION (FIGMA DESIGN) ================= -->
+  <nav class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 shadow-lg px-2 py-2">
+    <div class="max-w-md mx-auto grid grid-cols-5 gap-1 text-center">
+      
+      <!-- Nav 1: Penampilan -->
+      <button onclick="navigateToBab(3)" class="nav-item flex flex-col items-center justify-center p-1 active-press group">
+        <div class="w-8 h-8 rounded-lg bg-prudent-teal text-white flex items-center justify-center text-[10px] font-bold shadow-sm">
+          A
+        </div>
+        <span class="text-[9px] font-semibold text-slate-600 mt-1">Penampilan</span>
+      </button>
 
-  <!-- Script JS -->
-  <script src="JS.js"></script>
+      <!-- Nav 2: Kehadiran -->
+      <button onclick="navigateToBab(5)" class="nav-item flex flex-col items-center justify-center p-1 active-press group">
+        <div class="w-8 h-8 rounded-lg border border-prudent-teal text-prudent-teal flex items-center justify-center text-[10px] font-bold">
+          B
+        </div>
+        <span class="text-[9px] font-semibold text-slate-600 mt-1">Kehadiran</span>
+      </button>
+
+      <!-- Nav 3: Ketentuan Umum -->
+      <button onclick="navigateToBab(1)" class="nav-item flex flex-col items-center justify-center p-1 active-press group">
+        <div class="w-8 h-8 rounded-lg border border-prudent-teal text-prudent-teal flex items-center justify-center text-[10px] font-bold">
+          C
+        </div>
+        <span class="text-[9px] font-semibold text-slate-600 mt-1 leading-none">Ketentuan<br/>Umum</span>
+      </button>
+
+      <!-- Nav 4: Hak & Peran -->
+      <button onclick="navigateToBab(2)" class="nav-item flex flex-col items-center justify-center p-1 active-press group">
+        <div class="w-8 h-8 rounded-lg border border-prudent-teal text-prudent-teal flex items-center justify-center text-[10px] font-bold">
+          D
+        </div>
+        <span class="text-[9px] font-semibold text-slate-600 mt-1">Hak & Peran</span>
+      </button>
+
+      <!-- Nav 5: Pengesahan -->
+      <button onclick="navigateToBab(10)" class="nav-item flex flex-col items-center justify-center p-1 active-press group">
+        <div class="w-8 h-8 rounded-lg border border-prudent-teal text-prudent-teal flex items-center justify-center text-[10px] font-bold">
+          E
+        </div>
+        <span class="text-[9px] font-semibold text-slate-600 mt-1">Pengesahan</span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- JavaScript -->
+  <script src="app.js"></script>
 </body>
 </html>
