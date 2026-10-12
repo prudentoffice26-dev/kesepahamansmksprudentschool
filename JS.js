@@ -899,23 +899,37 @@ function renderPasalContent(bab) {
   detailPasalContainer.innerHTML = "";
 
   if (bab.isPengesahan) {
-    detailPasalContainer.innerHTML = `
-      <div class="bg-white dark:bg-prudent-darkCard p-6 rounded-2xl border border-slate-200/80 dark:border-prudent-darkBorder text-center space-y-4 shadow-xs">
-        <h4 class="font-bold text-slate-800 dark:text-slate-100 text-sm md:text-base">Lembar Pengesahan Resmi</h4>
-        <p class="text-xs text-slate-500 dark:text-slate-400">Dokumen Kesepahaman TA 2026/2027 SMK Prudent School</p>
+  detailPasalContainer.innerHTML = `
+    <div class="bg-white dark:bg-prudent-darkCard p-6 rounded-2xl border border-slate-200/80 dark:border-prudent-darkBorder text-center space-y-4 shadow-xs select-none">
+      <h4 class="font-bold text-slate-800 dark:text-slate-100 text-sm md:text-base">Lembar Pengesahan Resmi</h4>
+      <p class="text-xs text-slate-500 dark:text-slate-400">Dokumen Kesepahaman TA 2026/2027 SMK Prudent School</p>
+      
+      <!-- CONTAINER PROTEKSI GAMBAR -->
+      <div class="relative w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-prudent-darkBorder bg-slate-50 dark:bg-slate-800 p-2 group">
         
-        <div class="w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-prudent-darkBorder shadow-xs bg-slate-50 dark:bg-slate-800 p-2">
-          <img 
-            src="lembar-pengesahan.jpg" 
-            alt="Lembar Pengesahan SMK Prudent School" 
-            class="w-full h-auto rounded-xl object-contain"
-            onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-8 text-xs text-slate-400 font-medium\'>Gambar lembar pengesahan (lembar-pengesahan.jpg) dapat ditaruh pada folder web.</div>';"
-          />
+        <!-- LAYER 1: WATERMARK OVERLAY (Teks bertumpuk diagonal) -->
+        <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none opacity-20 dark:opacity-30 rotate-[-20deg] select-none">
+          <p class="text-slate-900 dark:text-white font-black text-sm md:text-2xl uppercase tracking-widest text-center leading-relaxed">
+            DOKUMEN RESMI SMK PRUDENT SCHOOL<br>
+            CONFIDENTIAL • DO NOT COPY • NO SCREENSHOT<br>
+            TAHUN AJARAN 2026/2027
+          </p>
         </div>
+
+        <!-- LAYER 2: TRANSPARENT SHIELD (Mencegah Klik Kanan & Save Image langsung) -->
+        <div class="absolute inset-0 z-10 w-full h-full cursor-not-allowed" oncontextmenu="return false;"></div>
+
+        <!-- LAYER 3: GAMBAR ASLI DENGAN BACKGROUND-IMAGE -->
+        <div 
+          class="w-full h-auto min-h-[400px] md:min-h-[600px] rounded-xl bg-contain bg-center bg-no-repeat pointer-events-none"
+          style="background-image: url('lembar-pengesahan.jpg');"
+        ></div>
+
       </div>
-    `;
-    return;
-  }
+    </div>
+  `;
+  return;
+}
 
   if (bab.pasalList) {
     bab.pasalList.forEach((pasal) => {
