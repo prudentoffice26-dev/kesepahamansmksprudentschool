@@ -38,6 +38,18 @@
   </script>
 
   <style>
+        /* Matikan seleksi teks dan proteksi drag gambar */
+    body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    
+    img {
+      pointer-events: none;
+      -webkit-user-drag: none;
+    }
     body {
       font-family: 'Montserrat', sans-serif;
       -webkit-tap-highlight-color: transparent;
