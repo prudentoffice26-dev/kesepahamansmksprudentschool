@@ -1050,4 +1050,29 @@ window.addEventListener("resize", () => {
     babDetailSection.classList.remove("hidden");
     mobileBackBtn.classList.add("hidden");
   }
+  // 1. Matikan Klik Kanan
+document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+// 2. Blokir Shortcut Copy (Ctrl+C), Print (Ctrl+P), Inspect Element (F12/Ctrl+Shift+I), dan PrintScreen
+document.addEventListener('keydown', (e) => {
+  if (
+    e.key === 'PrintScreen' ||
+    (e.ctrlKey && ['c', 'p', 'u', 's'].includes(e.key.toLowerCase())) ||
+    (e.ctrlKey && e.shiftKey && ['i', 'j', 'c'].includes(e.key.toLowerCase())) ||
+    e.key === 'F12'
+  ) {
+    e.preventDefault();
+    navigator.clipboard.writeText(''); // Kosongkan clipboard
+    alert('Dokumen dilindungi. Dilarang mengopi atau mengambil tangkapan layar!');
+  }
+});
+
+// 3. Efek Blur Otomatis saat Layar Ditinggal / Pindah Aplikasi / Pakai Snipping Tool
+window.addEventListener('blur', () => {
+  document.body.style.filter = 'blur(15px)';
+});
+
+window.addEventListener('focus', () => {
+  document.body.style.filter = 'none';
+});
 });
