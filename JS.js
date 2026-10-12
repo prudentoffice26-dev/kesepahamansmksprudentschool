@@ -901,9 +901,9 @@ function renderPasalContent(bab) {
   // TAMPILAN KHUSUS 3 LEMBAR PENGESAHAN
   if (bab.isPengesahan) {
     const lembarFiles = [
-      'lembar-pengesahan-1.jpg',
-      'lembar-pengesahan-2.jpg',
-      'lembar-pengesahan-3.jpg'
+      'KESEPAHAMAN SMK PRUDENT SCHOOL SAH-1.png',
+      'KESEPAHAMAN SMK PRUDENT SCHOOL SAH-2.png',
+      'KESEPAHAMAN SMK PRUDENT SCHOOL SAH-3.png'
     ];
 
     let pagesHtml = lembarFiles.map((filename, index) => `
