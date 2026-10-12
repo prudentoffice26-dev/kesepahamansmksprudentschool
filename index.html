@@ -38,6 +38,20 @@
   </script>
 
   <style>
+        /* Sembunyikan Lembar Pengesahan saat di-print */
+    @media print {
+      body {
+        display: none !important;
+      }
+    }
+    
+    /* Matikan efek drag & highlight pada gambar */
+    .select-none {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
         /* Matikan seleksi teks dan proteksi drag gambar */
     body {
       -webkit-user-select: none;
