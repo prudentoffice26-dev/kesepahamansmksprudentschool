@@ -901,7 +901,7 @@ function renderPasalContent(bab) {
   // TAMPILAN KHUSUS 3 LEMBAR PENGESAHAN
   if (bab.isPengesahan) {
     const lembarFiles = [
-      'KESEPAHAMAN SMK PRUDENT SCHOOL SAH-1.png',
+      'https://github.com/prudentoffice26-dev/kesepahamansmksprudentschool/blob/main/KESEPAHAMAN%20SMK%20PRUDENT%20SCHOOL%20SAH-1.png',
       'KESEPAHAMAN SMK PRUDENT SCHOOL SAH-2.png',
       'KESEPAHAMAN SMK PRUDENT SCHOOL SAH-3.png'
     ];
