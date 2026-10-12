@@ -764,8 +764,8 @@ const kesepahamanData = [
   }
 ];
 
-// STATE AKTIF
-let activeBabId = 1;
+// STATE AKTIF (Inisialisasi null untuk tampilan mobile list)
+let activeBabId = null;
 
 // DOM ELEMENTS
 const searchInput = document.getElementById("searchInput");
@@ -782,7 +782,6 @@ const mobileBackBtn = document.getElementById("mobileBackBtn");
 // INITIALIZATION
 function initApp() {
   initDarkMode();
-  renderSidebarNav();
   
   if (window.innerWidth < 768) {
     showMobileList();
@@ -801,7 +800,7 @@ if (document.readyState === "loading") {
   initApp();
 }
 
-// LOGIKA DARK MODE AUTO BROWSER/SISTEM
+// LOGIKA DARK MODE
 function initDarkMode() {
   const darkModeToggle = document.getElementById("darkModeToggle");
   const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -827,14 +826,18 @@ function initDarkMode() {
   }
 }
 
-// TAMPILKAN DAFTAR BAB SEBAGAI HALAMAN UTAMA DI MOBILE
+// TAMPILKAN DAFTAR BAB SEBAGAI HALAMAN UTAMA DI MOBILE (RESET HIGHLIGHT HIJAU)
 function showMobileList() {
   if (window.innerWidth < 768) {
+    activeBabId = null; // Clear bab aktif agar tombol kembali normal
+    renderSidebarNav();
     babListSection.classList.remove("hidden");
     babDetailSection.classList.add("hidden");
     mobileBackBtn.classList.add("hidden");
     mobileBackBtn.classList.remove("flex");
   } else {
+    if (!activeBabId) activeBabId = 1;
+    renderSidebarNav();
     babListSection.classList.remove("hidden");
     babDetailSection.classList.remove("hidden");
     mobileBackBtn.classList.add("hidden");
@@ -865,7 +868,7 @@ function selectBab(babId, isMobileClick = true) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// RENDER SIDEBAR NAVIGASI (MURNI CUMA DAFTAR BAB TANPA IKON KOTAK)
+// RENDER SIDEBAR NAVIGASI
 function renderSidebarNav() {
   if (!sidebarList) return;
 
@@ -1001,7 +1004,11 @@ function setupSearch() {
       if (clearSearchBtn) clearSearchBtn.classList.remove("hidden");
     } else {
       if (clearSearchBtn) clearSearchBtn.classList.add("hidden");
-      selectBab(activeBabId, false);
+      if (window.innerWidth < 768) {
+        showMobileList();
+      } else {
+        selectBab(activeBabId || 1, false);
+      }
       return;
     }
 
@@ -1027,7 +1034,7 @@ function setupSearch() {
       if (window.innerWidth < 768) {
         showMobileList();
       } else {
-        selectBab(activeBabId, false);
+        selectBab(activeBabId || 1, false);
       }
       searchInput.focus();
     });
@@ -1037,6 +1044,8 @@ function setupSearch() {
 // Handle Auto Resize Window
 window.addEventListener("resize", () => {
   if (window.innerWidth >= 768) {
+    if (!activeBabId) activeBabId = 1;
+    renderSidebarNav();
     babListSection.classList.remove("hidden");
     babDetailSection.classList.remove("hidden");
     mobileBackBtn.classList.add("hidden");
