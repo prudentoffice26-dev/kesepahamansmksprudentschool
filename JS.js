@@ -764,7 +764,7 @@ const kesepahamanData = [
   }
 ];
 
-// STATE AKTIF (Inisialisasi null untuk tampilan mobile list)
+// STATE AKTIF
 let activeBabId = null;
 
 // DOM ELEMENTS
@@ -800,7 +800,7 @@ if (document.readyState === "loading") {
   initApp();
 }
 
-// LOGIKA DARK MODE
+// LOGIKA DARK MODE AUTO BROWSER/SISTEM
 function initDarkMode() {
   const darkModeToggle = document.getElementById("darkModeToggle");
   const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -829,7 +829,7 @@ function initDarkMode() {
 // TAMPILKAN DAFTAR BAB SEBAGAI HALAMAN UTAMA DI MOBILE (RESET HIGHLIGHT HIJAU)
 function showMobileList() {
   if (window.innerWidth < 768) {
-    activeBabId = null; // Clear bab aktif agar tombol kembali normal
+    activeBabId = null; // Reset highlight tombol agar kembali normal
     renderSidebarNav();
     babListSection.classList.remove("hidden");
     babDetailSection.classList.add("hidden");
@@ -898,39 +898,61 @@ function renderPasalContent(bab) {
   if (!detailPasalContainer) return;
   detailPasalContainer.innerHTML = "";
 
+  // TAMPILAN KHUSUS 3 LEMBAR PENGESAHAN
   if (bab.isPengesahan) {
-  detailPasalContainer.innerHTML = `
-    <div class="bg-white dark:bg-prudent-darkCard p-6 rounded-2xl border border-slate-200/80 dark:border-prudent-darkBorder text-center space-y-4 shadow-xs select-none">
-      <h4 class="font-bold text-slate-800 dark:text-slate-100 text-sm md:text-base">Lembar Pengesahan Resmi</h4>
-      <p class="text-xs text-slate-500 dark:text-slate-400">Dokumen Kesepahaman TA 2026/2027 SMK Prudent School</p>
-      
-      <!-- CONTAINER PROTEKSI GAMBAR -->
-      <div class="relative w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-prudent-darkBorder bg-slate-50 dark:bg-slate-800 p-2 group">
+    const lembarFiles = [
+      'lembar-pengesahan-1.jpg',
+      'lembar-pengesahan-2.jpg',
+      'lembar-pengesahan-3.jpg'
+    ];
+
+    let pagesHtml = lembarFiles.map((filename, index) => `
+      <div class="space-y-2">
+        <span class="inline-block text-[10px] font-bold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">
+          Halaman ${index + 1} dari ${lembarFiles.length}
+        </span>
         
-        <!-- LAYER 1: WATERMARK OVERLAY (Teks bertumpuk diagonal) -->
-        <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none opacity-20 dark:opacity-30 rotate-[-20deg] select-none">
-          <p class="text-slate-900 dark:text-white font-black text-sm md:text-2xl uppercase tracking-widest text-center leading-relaxed">
-            DOKUMEN RESMI SMK PRUDENT SCHOOL<br>
-            CONFIDENTIAL • DO NOT COPY • NO SCREENSHOT<br>
-            TAHUN AJARAN 2026/2027
-          </p>
+        <!-- CONTAINER PROTEKSI GAMBAR -->
+        <div class="relative w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-prudent-darkBorder bg-slate-50 dark:bg-slate-800 p-2 group">
+          
+          <!-- LAYER 1: WATERMARK OVERLAY -->
+          <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none opacity-20 dark:opacity-30 rotate-[-20deg] select-none">
+            <p class="text-slate-900 dark:text-white font-black text-xs md:text-xl uppercase tracking-widest text-center leading-relaxed">
+              DOKUMEN RESMI SMK PRUDENT SCHOOL<br>
+              CONFIDENTIAL • DO NOT COPY • NO SCREENSHOT<br>
+              TAHUN AJARAN 2026/2027
+            </p>
+          </div>
+
+          <!-- LAYER 2: TRANSPARENT SHIELD -->
+          <div class="absolute inset-0 z-10 w-full h-full cursor-not-allowed" oncontextmenu="return false;"></div>
+
+          <!-- LAYER 3: GAMBAR ASLI DENGAN BACKGROUND-IMAGE -->
+          <div 
+            class="w-full h-auto min-h-[450px] md:min-h-[650px] rounded-xl bg-contain bg-center bg-no-repeat pointer-events-none"
+            style="background-image: url('${filename}');"
+          ></div>
+
         </div>
-
-        <!-- LAYER 2: TRANSPARENT SHIELD (Mencegah Klik Kanan & Save Image langsung) -->
-        <div class="absolute inset-0 z-10 w-full h-full cursor-not-allowed" oncontextmenu="return false;"></div>
-
-        <!-- LAYER 3: GAMBAR ASLI DENGAN BACKGROUND-IMAGE -->
-        <div 
-          class="w-full h-auto min-h-[400px] md:min-h-[600px] rounded-xl bg-contain bg-center bg-no-repeat pointer-events-none"
-          style="background-image: url('lembar-pengesahan.jpg');"
-        ></div>
-
       </div>
-    </div>
-  `;
-  return;
-}
+    `).join('');
 
+    detailPasalContainer.innerHTML = `
+      <div class="bg-white dark:bg-prudent-darkCard p-5 md:p-6 rounded-2xl border border-slate-200/80 dark:border-prudent-darkBorder text-center space-y-6 shadow-xs select-none">
+        <div>
+          <h4 class="font-bold text-slate-800 dark:text-slate-100 text-sm md:text-base">Lembar Pengesahan Resmi</h4>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Dokumen Kesepahaman TA 2026/2027 SMK Prudent School (3 Halaman)</p>
+        </div>
+        
+        <div class="space-y-8">
+          ${pagesHtml}
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  // TAMPILAN PASAL-PASAL BIASA (BAB I - IX)
   if (bab.pasalList) {
     bab.pasalList.forEach((pasal) => {
       const pasalCard = document.createElement("div");
@@ -1055,7 +1077,7 @@ function setupSearch() {
   }
 }
 
-// Handle Auto Resize Window
+// HANDLE AUTO RESIZE WINDOW
 window.addEventListener("resize", () => {
   if (window.innerWidth >= 768) {
     if (!activeBabId) activeBabId = 1;
@@ -1064,10 +1086,17 @@ window.addEventListener("resize", () => {
     babDetailSection.classList.remove("hidden");
     mobileBackBtn.classList.add("hidden");
   }
-  // 1. Matikan Klik Kanan
+});
+
+
+// =========================================================================
+// SISTEM KEAMANAN GLOBAL (ANTI KLIK KANAN, ANTI COPY, ANTI INSPECT & BLUR)
+// =========================================================================
+
+// 1. Matikan Klik Kanan
 document.addEventListener('contextmenu', (e) => e.preventDefault());
 
-// 2. Blokir Shortcut Copy (Ctrl+C), Print (Ctrl+P), Inspect Element (F12/Ctrl+Shift+I), dan PrintScreen
+// 2. Blokir Shortcut Keyboard
 document.addEventListener('keydown', (e) => {
   if (
     e.key === 'PrintScreen' ||
@@ -1076,7 +1105,9 @@ document.addEventListener('keydown', (e) => {
     e.key === 'F12'
   ) {
     e.preventDefault();
-    navigator.clipboard.writeText(''); // Kosongkan clipboard
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(''); // Kosongkan clipboard
+    }
     alert('Dokumen dilindungi. Dilarang mengopi atau mengambil tangkapan layar!');
   }
 });
@@ -1088,5 +1119,4 @@ window.addEventListener('blur', () => {
 
 window.addEventListener('focus', () => {
   document.body.style.filter = 'none';
-});
 });
