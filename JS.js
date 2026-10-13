@@ -773,7 +773,6 @@ const kesepahamanData = [
       }
     ]
   },
-  // ... (kode BAB X sebelumnya ada di atas ini)
   {
     id: 11,
     babLabel: "LAMPIRAN",
@@ -952,17 +951,6 @@ const kesepahamanData = [
   },
   {
     id: 12,
-    babLabel: "LEMBAR PENGESAHAN",
-    title: "LEMBAR PENGESAHAN DOKUMEN KESEPAHAMAN",
-    subtitle: "Tanda Tangan & Persetujuan Resmi TA 2026/2027",
-    deskripsi: "Bukti kesepakatan tertulis yang disahkan oleh Principal, Kesiswaan, Perwakilan Prudent, dan Perwakilan Orang Tua/Wali seluruh tingkat.",
-    isPengesahan: true
-  }
-];
-
-// STATE AKTIF ...
-// (Biarkan kode di bawahnya tetap sama seperti sebelumnya)
-    id: 15,
     babLabel: "LEMBAR PENGESAHAN",
     title: "LEMBAR PENGESAHAN DOKUMEN KESEPAHAMAN",
     subtitle: "Tanda Tangan & Persetujuan Resmi TA 2026/2027",
