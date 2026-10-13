@@ -1217,34 +1217,102 @@ function renderPasalContent(bab) {
                `;
             });
             // DIAGRAM ALUR TEKS LAMPIRAN 3
+         } else if (block.type === 'flowchart') {
+            // DIAGRAM ALUR CARD UI DENGAN TANDA PANAH & PERCABANGAN
             pasalContentHtml += `
-              <div class="mt-4 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-200 dark:border-prudent-darkBorder overflow-x-auto text-[10px] md:text-xs whitespace-pre font-mono text-slate-700 dark:text-slate-300 leading-tight">
-Temuan Pelanggaran
-        ↓
-Klarifikasi & Verifikasi
-Pencatatan di Prunus DigiApps
-        ↓
-Pembinaan
-        ↓
-Evaluasi Hasil Pembinaan
-        ↓
-  ◇ Perilaku Membaik? ◇
- ┌──────────┴─────────┐ 
- Ya                 Tidak 
- ↓                    ↓
-Monitoring      Pemanggilan Orang Tua
-Berkala         Penerbitan SP
-                      ↓
-                Sidang Tim Kedisiplinan
-                      ↓
-                Keputusan Principal
-                      ↓
-                Monitoring & Evaluasi Akhir
+              <div class="mt-4 flex flex-col items-center space-y-3 py-4 max-w-xl mx-auto select-none">
+                
+                <!-- Card 1 -->
+                <div class="w-full bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-prudent-darkBorder p-3.5 rounded-xl shadow-xs text-center">
+                  <span class="text-[9px] font-bold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 1</span>
+                  <p class="text-xs font-bold text-slate-800 dark:text-slate-100">Temuan Pelanggaran</p>
+                </div>
+                
+                <!-- Arrow -->
+                <div class="text-slate-400 dark:text-slate-500 text-sm font-bold">↓</div>
+
+                <!-- Card 2 -->
+                <div class="w-full bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-prudent-darkBorder p-3.5 rounded-xl shadow-xs text-center">
+                  <span class="text-[9px] font-bold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 2</span>
+                  <p class="text-xs font-bold text-slate-800 dark:text-slate-100">Klarifikasi & Verifikasi</p>
+                  <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Pencatatan di Prunus DigiApps</p>
+                </div>
+
+                <!-- Arrow -->
+                <div class="text-slate-400 dark:text-slate-500 text-sm font-bold">↓</div>
+
+                <!-- Card 3 -->
+                <div class="w-full bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-prudent-darkBorder p-3.5 rounded-xl shadow-xs text-center">
+                  <span class="text-[9px] font-bold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 3</span>
+                  <p class="text-xs font-bold text-slate-800 dark:text-slate-100">Pembinaan</p>
+                </div>
+
+                <!-- Arrow -->
+                <div class="text-slate-400 dark:text-slate-500 text-sm font-bold">↓</div>
+
+                <!-- Card 4 -->
+                <div class="w-full bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-prudent-darkBorder p-3.5 rounded-xl shadow-xs text-center">
+                  <span class="text-[9px] font-bold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 4</span>
+                  <p class="text-xs font-bold text-slate-800 dark:text-slate-100">Evaluasi Hasil Pembinaan</p>
+                </div>
+
+                <!-- Arrow -->
+                <div class="text-slate-400 dark:text-slate-500 text-sm font-bold">↓</div>
+
+                <!-- Decision Card (Kondisi) -->
+                <div class="w-full bg-teal-50/60 dark:bg-teal-950/20 border-2 border-prudent-teal/40 dark:border-prudent-tealNeon/40 p-4 rounded-xl shadow-xs text-center">
+                  <span class="text-[9px] font-extrabold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Pemeriksaan</span>
+                  <p class="text-xs font-black text-slate-800 dark:text-slate-100">Perilaku Membaik?</p>
+                </div>
+
+                <!-- Branch Layout (Ya & Tidak) -->
+                <div class="w-full grid grid-cols-2 gap-3 pt-1">
+                  
+                  <!-- Cabang Kiri: Ya -->
+                  <div class="flex flex-col items-center space-y-2">
+                    <span class="px-2 py-0.5 bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 text-[10px] font-extrabold rounded-md">YA</span>
+                    <div class="text-slate-400 dark:text-slate-500 text-xs font-bold">↓</div>
+                    <div class="w-full bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/50 p-3 rounded-xl text-center shadow-xs">
+                      <p class="text-xs font-bold text-slate-800 dark:text-slate-100">Monitoring Berkala</p>
+                    </div>
+                  </div>
+
+                  <!-- Cabang Kanan: Tidak -->
+                  <div class="flex flex-col items-center space-y-2">
+                    <span class="px-2 py-0.5 bg-rose-100 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 text-[10px] font-extrabold rounded-md">TIDAK</span>
+                    <div class="text-slate-400 dark:text-slate-500 text-xs font-bold">↓</div>
+                    
+                    <div class="w-full space-y-2">
+                      <div class="bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/50 p-3 rounded-xl text-center shadow-xs">
+                        <p class="text-xs font-bold text-slate-800 dark:text-slate-100">Pemanggilan Orang Tua</p>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Penerbitan Surat Peringatan (SP)</p>
+                      </div>
+
+                      <div class="text-slate-400 dark:text-slate-500 text-xs font-bold text-center">↓</div>
+
+                      <div class="bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/50 p-3 rounded-xl text-center shadow-xs">
+                        <p class="text-xs font-bold text-slate-800 dark:text-slate-100">Sidang Tim Kedisiplinan</p>
+                      </div>
+
+                      <div class="text-slate-400 dark:text-slate-500 text-xs font-bold text-center">↓</div>
+
+                      <div class="bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/50 p-3 rounded-xl text-center shadow-xs">
+                        <p class="text-xs font-bold text-slate-800 dark:text-slate-100">Keputusan Principal</p>
+                      </div>
+
+                      <div class="text-slate-400 dark:text-slate-500 text-xs font-bold text-center">↓</div>
+
+                      <div class="bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/50 p-3 rounded-xl text-center shadow-xs">
+                        <p class="text-xs font-bold text-slate-800 dark:text-slate-100">Monitoring & Evaluasi Akhir</p>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
               </div>
             `;
-          }
-        });
-      }
 
       pasalContentHtml += `</div>`;
 
