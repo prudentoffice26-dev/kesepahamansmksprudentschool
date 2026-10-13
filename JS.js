@@ -762,6 +762,88 @@ const kesepahamanData = [
     deskripsi: "Bukti kesepakatan tertulis yang disahkan oleh Principal, Kesiswaan, Perwakilan Prudent, dan Perwakilan Orang Tua/Wali seluruh tingkat.",
     isPengesahan: true
   }
+  // ... (kode BAB IX sebelumnya ada di sini)
+  {
+    id: 10,
+    babLabel: "BAB X",
+    title: "BAB X: KETENTUAN PENUTUP",
+    subtitle: "Pasal 35",
+    deskripsi: "Pemberlakuan dokumen, ketentuan tambahan, dan kewajiban pelaksanaan dengan itikad baik.",
+    pasalList: [
+      {
+        nomor: "PASAL 35",
+        judul: "KETENTUAN PENUTUP",
+        blocks: [
+          { type: "p", text: "(1) Dokumen Kesepahaman ini mulai berlaku pada tanggal ditetapkan dan ditandatangani oleh Principal SMK Prudent School, Kesiswaan, Prudent, dan orang tua/wali." },
+          { type: "p", text: "(2) Hal-hal yang belum diatur dalam Dokumen Kesepahaman ini akan ditetapkan kemudian melalui keputusan Principal SMK Prudent School sepanjang tidak bertentangan dengan ketentuan yang berlaku." },
+          { type: "p", text: "(3) Seluruh pihak berkewajiban melaksanakan isi Dokumen Kesepahaman ini dengan penuh tanggung jawab demi terciptanya budaya kerja profesional di lingkungan SMK Prudent School." },
+          { type: "p", text: "(4) Dokumen Kesepahaman ini dibuat dengan itikad baik untuk dipatuhi oleh seluruh pihak sebagai bentuk komitmen bersama dalam mewujudkan budaya kerja profesional di SMK Prudent School." }
+        ]
+      }
+    ]
+  },
+  {
+    id: 11,
+    babLabel: "LAMPIRAN",
+    title: "LAMPIRAN DOKUMEN",
+    subtitle: "SOP & Tata Tertib",
+    deskripsi: "Berisi aturan klasifikasi pelanggaran, tahapan pembinaan, SOP Penanganan Pelanggaran, dan SOP Guru Piket.",
+    pasalList: [
+      {
+        nomor: "LAMPIRAN I - II",
+        judul: "KLASIFIKASI PELANGGARAN & TAHAPAN PEMBINAAN",
+        blocks: [
+          { type: "p", text: "Pembinaan dan sanksi diberikan secara bertahap, objektif, proporsional, edukatif, berkeadilan, serta mempertimbangkan tingkat pelanggaran. Berikut adalah ringkasan klasifikasinya:" },
+          { type: "list", items: [
+            "Pelanggaran Ringan: Tidak memakai name tag, dasi, ikat pinggang, topi, atau atribut tidak lengkap. Rambut/sepatu/kaos kaki tidak sesuai ketentuan. (Sanksi: Teguran lisan, pembinaan & batas waktu perbaikan)",
+            "Pelanggaran Sedang: Terlambat hadir, tidak ikut kegiatan pagi/keagamaan, membolos piket, menggunakan HP tanpa izin. (Sanksi: Teguran tertulis, penugasan kebersihan, penyitaan HP sementara, pembinaan Mentor)",
+            "Pelanggaran Berat: Membolos sekolah, vandalisme, bullying, pacaran, plagiarisme, berkata kasar/SARA, menyebarkan hoaks. (Sanksi: SP I/II, pemanggilan orang tua, penggantian kerugian)",
+            "Pelanggaran Sangat Berat: Bawa senjata tajam, merokok/vape, miras/narkoba, tawuran, pencurian, pemerasan, pelecehan, pemalsuan dokumen. (Sanksi: SP III, Sidang Kedisiplinan, hingga dikembalikan ke Orang Tua)"
+          ]}
+        ]
+      },
+      {
+        nomor: "LAMPIRAN III",
+        judul: "SOP PENANGANAN PELANGGARAN",
+        blocks: [
+          { type: "p", text: "Alur penanganan pelanggaran kedisiplinan bagi seluruh Prudent:" },
+          { type: "list", items: [
+            "Tahap 1 - Temuan Pelanggaran: Temuan oleh Prudent, Guru, Mentor, Guru BK, dan klarifikasi.",
+            "Tahap 2 - Pencatatan: Dicatat di Prunus DigiApps / Buku Pelanggaran.",
+            "Tahap 3 - Pembinaan Awal: Ringan (Teguran), Sedang (Mentor), Berat (BK & Kesiswaan).",
+            "Tahap 4 - Pemanggilan Orang Tua/Wali: Jika berulang atau masuk kategori berat/sangat berat.",
+            "Tahap 5 - Penerbitan Surat Peringatan (SP): Pemberian SP I, II, atau III sesuai frekuensi.",
+            "Tahap 6 - Tindak Lanjut: Konseling lanjutan, penugasan edukatif, ganti rugi, hingga Sidang Tim Kedisiplinan."
+          ]}
+        ]
+      },
+      {
+        nomor: "LAMPIRAN IV",
+        judul: "SOP GURU PIKET",
+        blocks: [
+          { type: "p", text: "Tugas dan kewajiban Guru Piket dalam mengawasi kedisiplinan harian:" },
+          { type: "list", items: [
+            "Kedatangan: Mengawasi kedatangan Prudent (Jam masuk 07.00 WIB, batas toleransi 07.05 WIB).",
+            "Telepon Genggam: Memantau pengumpulan telepon genggam di Ruang Office setelah sholawatan.",
+            "Kegiatan Pagi: Memastikan kelancaran kegiatan pembiasaan pagi di lapangan.",
+            "Perizinan: Menandatangani Surat Izin Keluar/Masuk lingkungan sekolah.",
+            "Pelaporan: Memeriksa perizinan Prunus DigiApps, mencatat alpa, dan menangani pelanggaran harian."
+          ]}
+        ]
+      }
+    ]
+  },
+  {
+    id: 12,
+    babLabel: "LEMBAR PENGESAHAN",
+    title: "LEMBAR PENGESAHAN DOKUMEN KESEPAHAMAN",
+    subtitle: "Tanda Tangan & Persetujuan Resmi TA 2026/2027",
+    deskripsi: "Bukti kesepakatan tertulis yang disahkan oleh Principal, Kesiswaan, Perwakilan Prudent, dan Perwakilan Orang Tua/Wali seluruh tingkat.",
+    isPengesahan: true
+  }
+
+// STATE AKTIF ...
+// (Kode selanjutnya biarkan tetap sama)
 ];
 
 // STATE AKTIF
