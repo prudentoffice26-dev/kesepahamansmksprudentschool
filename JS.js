@@ -464,6 +464,7 @@ const kesepahamanData = [
           },
           { type: "p", text: "(9) Pembiasaan keagamaan pada hari Senin sampai dengan Jumat dilaksanakan dalam bentuk solawatan bagi Prudent beragama Islam, sedangkan Prudent yang beragama non muslim membaca doa sesuai agama dan kepercayaannya." },
           { type: "p", text: "(10) Kegiatan pembiasaan sekolah dilaksanakan dengan ketentuan sesuai tabel jadwal di bawah." },
+          { type: "table_pembiasaan" }, // <-- Tabel pembiasaan dimunculkan kembali di sini
           { type: "p", text: "(11) Prudent wajib mengikuti seluruh kegiatan pagi dan pembiasaan sekolah dengan tertib, disiplin, dan bertanggung jawab." },
           { type: "p", text: "(12) Prudent wajib mengikuti kegiatan keagamaan, pembiasaan, dan kegiatan sekolah yang telah dijadwalkan." },
           { type: "p", text: "(13) Prudent tidak diperkenankan meninggalkan lingkungan sekolah selama jam pembelajaran maupun kegiatan sekolah tanpa izin dari pihak yang berwenang." },
@@ -1192,19 +1193,18 @@ function renderPasalContent(bab) {
             `;
           } else if (block.type === 'table_pelanggaran') {
             // TABEL BESAR 58 DAFTAR PELANGGARAN
-          let rowsHtml = '';
+            let rowsHtml = '';
             block.data.forEach((row, idx) => {
-               let bgRow = (row[1] === "Ringan") ? "bg-white dark:bg-prudent-darkCard" :
+               let bgRow = (row[1] === "Ringan") ? "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300" :
                            (row[1] === "Sedang") ? "bg-amber-400/20 dark:bg-amber-400/20" :
                            (row[1] === "Berat") ? "bg-orange-500/20 dark:bg-orange-400/20" :
                            "bg-red-500/20 dark:bg-red-500/20";
                
-               let badgeColor = (row[1] === "Ringan") ? "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300" :
+               let badgeColor = (row[1] === "Ringan") ? "bg-blue-400/20 text-blue-800 dark:bg-blue-400/20 dark:text-blue-300 font-bold" :
                                 (row[1] === "Sedang") ? "bg-amber-400/20 text-amber-800 dark:bg-amber-400/20 dark:text-amber-300 font-bold" :
                                 (row[1] === "Berat") ? "bg-orange-400/20 text-orange-800 dark:bg-orange-400/20 dark:text-orange-300 font-bold" :
                                 "bg-red-500/20 text-red-700 dark:bg-red-500/20 dark:text-red-300 font-extrabold";
 
-               // Format teks kategori agar jika ada spasi, berubah jadi baris baru di dalam 1 box yang sama dan rata tengah
                let formattedKategori = row[1].replace(" ", "<br>");
 
                rowsHtml += `
@@ -1216,53 +1216,67 @@ function renderPasalContent(bab) {
                  </tr>
                `;
             });
-            // DIAGRAM ALUR TEKS LAMPIRAN 3
-         } else if (block.type === 'flowchart') {
-            // DIAGRAM ALUR CARD UI DENGAN TANDA PANAH & PERCABANGAN
+            pasalContentHtml += `
+              <div class="mt-4 overflow-x-auto rounded-2xl border border-slate-200 dark:border-prudent-darkBorder shadow-sm">
+                <table class="w-full text-[11px] md:text-xs text-left">
+                  <thead class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-prudent-darkBorder uppercase text-[10px] tracking-wider">
+                    <tr>
+                      <th class="px-3 py-2 text-center w-10">No</th>
+                      <th class="px-3 py-2 w-1/2">Jenis Pelanggaran</th>
+                      <th class="px-3 py-2 text-center">Kategori</th>
+                      <th class="px-3 py-2 w-1/3">Pembinaan/Sanksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>${rowsHtml}</tbody>
+                </table>
+              </div>
+            `;
+            } else if (block.type === 'flowchart') {
+            // DIAGRAM ALUR CARD UI KONSISTEN & KONTRAS (HIJAU & MERAH)
             pasalContentHtml += `
               <div class="mt-4 flex flex-col items-center space-y-3 py-4 max-w-xl mx-auto select-none">
                 
                 <!-- Card 1 -->
-                <div class="w-full bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-prudent-darkBorder p-3.5 rounded-xl shadow-xs text-center">
-                  <span class="text-[9px] font-bold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 1</span>
-                  <p class="text-xs font-bold text-slate-800 dark:text-slate-100">Temuan Pelanggaran</p>
+                <div class="w-full bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-prudent-darkBorder p-3.5 rounded-xl shadow-xs text-center">
+                  <span class="text-[9px] font-semibold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 1</span>
+                  <p class="text-xs font-semibold text-slate-800 dark:text-slate-100">Temuan Pelanggaran</p>
                 </div>
                 
                 <!-- Arrow -->
                 <div class="text-slate-400 dark:text-slate-500 text-sm font-bold">↓</div>
 
                 <!-- Card 2 -->
-                <div class="w-full bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-prudent-darkBorder p-3.5 rounded-xl shadow-xs text-center">
-                  <span class="text-[9px] font-bold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 2</span>
-                  <p class="text-xs font-bold text-slate-800 dark:text-slate-100">Klarifikasi & Verifikasi</p>
+                <div class="w-full bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-prudent-darkBorder p-3.5 rounded-xl shadow-xs text-center">
+                  <span class="text-[9px] font-semibold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 2</span>
+                  <p class="text-xs font-semibold text-slate-800 dark:text-slate-100">Klarifikasi & Verifikasi</p>
                   <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Pencatatan di Prunus DigiApps</p>
                 </div>
 
                 <!-- Arrow -->
-                <div class="text-slate-400 dark:text-slate-500 text-sm font-bold">↓</div>
+                <div class="text-slate-400 dark:text-slate-500 text-sm font-semibold">↓</div>
 
                 <!-- Card 3 -->
-                <div class="w-full bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-prudent-darkBorder p-3.5 rounded-xl shadow-xs text-center">
-                  <span class="text-[9px] font-bold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 3</span>
-                  <p class="text-xs font-bold text-slate-800 dark:text-slate-100">Pembinaan</p>
+                <div class="w-full bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-prudent-darkBorder p-3.5 rounded-xl shadow-xs text-center">
+                  <span class="text-[9px] font-semibold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 2</span>
+                  <p class="text-xs font-semibold text-slate-800 dark:text-slate-100">Pembinaan</p>
                 </div>
 
                 <!-- Arrow -->
-                <div class="text-slate-400 dark:text-slate-500 text-sm font-bold">↓</div>
+                <div class="text-slate-400 dark:text-slate-500 text-sm font-semibold">↓</div>
 
                 <!-- Card 4 -->
-                <div class="w-full bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-prudent-darkBorder p-3.5 rounded-xl shadow-xs text-center">
-                  <span class="text-[9px] font-bold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 4</span>
-                  <p class="text-xs font-bold text-slate-800 dark:text-slate-100">Evaluasi Hasil Pembinaan</p>
+                <div class="w-full bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-prudent-darkBorder p-3.5 rounded-xl shadow-xs text-center">
+                  <span class="text-[9px] font-semibold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 2</span>
+                  <p class="text-xs font-semibold text-slate-800 dark:text-slate-100">Evaluasi Hasil Pembinaan</p>
                 </div>
 
                 <!-- Arrow -->
                 <div class="text-slate-400 dark:text-slate-500 text-sm font-bold">↓</div>
 
                 <!-- Decision Card (Kondisi) -->
-                <div class="w-full bg-teal-50/60 dark:bg-teal-950/20 border-2 border-prudent-teal/40 dark:border-prudent-tealNeon/40 p-4 rounded-xl shadow-xs text-center">
-                  <span class="text-[9px] font-extrabold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Pemeriksaan</span>
-                  <p class="text-xs font-black text-slate-800 dark:text-slate-100">Perilaku Membaik?</p>
+                <div class="w-full bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-prudent-darkBorder p-3.5 rounded-xl shadow-xs text-center">
+                  <span class="text-[9px] font-semibold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 2</span>
+                  <p class="text-xs font-semibold text-slate-800 dark:text-slate-100">Perilaku Membaik?</p>
                 </div>
 
                 <!-- Branch Layout (Ya & Tidak) -->
@@ -1270,40 +1284,40 @@ function renderPasalContent(bab) {
                   
                   <!-- Cabang Kiri: Ya -->
                   <div class="flex flex-col items-center space-y-2">
-                    <span class="px-2 py-0.5 bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 text-[10px] font-extrabold rounded-md">YA</span>
+                    <span class="px-2 py-0.5 bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-[10px] font-extrabold rounded-md">YA</span>
                     <div class="text-slate-400 dark:text-slate-500 text-xs font-bold">↓</div>
-                    <div class="w-full bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/50 p-3 rounded-xl text-center shadow-xs">
-                      <p class="text-xs font-bold text-slate-800 dark:text-slate-100">Monitoring Berkala</p>
+                    <div class="w-full bg-emerald-50/80 dark:bg-emerald-500/15 border border-emerald-300 dark:border-emerald-500/30 p-3 rounded-xl text-center shadow-xs">
+                      <p class="text-xs font-bold text-emerald-900 dark:text-emerald-200">Monitoring Berkala</p>
                     </div>
                   </div>
 
                   <!-- Cabang Kanan: Tidak -->
                   <div class="flex flex-col items-center space-y-2">
-                    <span class="px-2 py-0.5 bg-rose-100 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 text-[10px] font-extrabold rounded-md">TIDAK</span>
+                    <span class="px-2 py-0.5 bg-rose-100 dark:bg-rose-500/20 text-rose-700 dark:text-rose-300 text-[10px] font-extrabold rounded-md">TIDAK</span>
                     <div class="text-slate-400 dark:text-slate-500 text-xs font-bold">↓</div>
                     
                     <div class="w-full space-y-2">
-                      <div class="bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/50 p-3 rounded-xl text-center shadow-xs">
-                        <p class="text-xs font-bold text-slate-800 dark:text-slate-100">Pemanggilan Orang Tua</p>
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Penerbitan Surat Peringatan (SP)</p>
+                      <div class="bg-rose-50/80 dark:bg-rose-500/15 border border-rose-300 dark:border-rose-500/30 p-3 rounded-xl text-center shadow-xs">
+                        <p class="text-xs font-bold text-rose-900 dark:text-rose-200">Pemanggilan Orang Tua</p>
+                        <p class="text-[11px] text-rose-700/80 dark:text-rose-300/80 mt-0.5">Penerbitan Surat Peringatan (SP)</p>
                       </div>
 
                       <div class="text-slate-400 dark:text-slate-500 text-xs font-bold text-center">↓</div>
 
-                      <div class="bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/50 p-3 rounded-xl text-center shadow-xs">
-                        <p class="text-xs font-bold text-slate-800 dark:text-slate-100">Sidang Tim Kedisiplinan</p>
+                      <div class="bg-rose-50/80 dark:bg-rose-500/15 border border-rose-300 dark:border-rose-500/30 p-3 rounded-xl text-center shadow-xs">
+                        <p class="text-xs font-bold text-rose-900 dark:text-rose-200">Sidang Tim Kedisiplinan</p>
                       </div>
 
                       <div class="text-slate-400 dark:text-slate-500 text-xs font-bold text-center">↓</div>
 
-                      <div class="bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/50 p-3 rounded-xl text-center shadow-xs">
-                        <p class="text-xs font-bold text-slate-800 dark:text-slate-100">Keputusan Principal</p>
+                      <div class="bg-rose-50/80 dark:bg-rose-500/15 border border-rose-300 dark:border-rose-500/30 p-3 rounded-xl text-center shadow-xs">
+                        <p class="text-xs font-bold text-rose-900 dark:text-rose-200">Keputusan Principal</p>
                       </div>
 
                       <div class="text-slate-400 dark:text-slate-500 text-xs font-bold text-center">↓</div>
 
-                      <div class="bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/50 p-3 rounded-xl text-center shadow-xs">
-                        <p class="text-xs font-bold text-slate-800 dark:text-slate-100">Monitoring & Evaluasi Akhir</p>
+                      <div class="bg-rose-50/80 dark:bg-rose-500/15 border border-rose-300 dark:border-rose-500/30 p-3 rounded-xl text-center shadow-xs">
+                        <p class="text-xs font-bold text-rose-900 dark:text-rose-200">Monitoring & Evaluasi Akhir</p>
                       </div>
                     </div>
 
@@ -1313,16 +1327,14 @@ function renderPasalContent(bab) {
 
               </div>
             `;
+          }
+        });
+      }
 
       pasalContentHtml += `</div>`;
 
       if (pasal.isPasal22) {
-        pasalCard.innerHTML = pasalHeaderHtml + pasalContentHtml + `
-          <div class="mt-3 pt-2 border-t border-slate-100 dark:border-prudent-darkBorder">
-            <span class="text-[10px] font-bold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wide">Jadwal Pembiasaan Pagi (Pasal 22 Ayat 10)</span>
-            ${pasal.blocks.find(b => b.type === 'table_pembiasaan') ? '' : `<div class="p-body text-xs mt-1">(Lihat jadwal pada Lampiran IV)</div>`}
-          </div>
-        `;
+        pasalCard.innerHTML = pasalHeaderHtml + pasalContentHtml;
       } else {
         pasalCard.innerHTML = pasalHeaderHtml + pasalContentHtml;
       }
