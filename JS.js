@@ -1192,7 +1192,7 @@ function renderPasalContent(bab) {
             `;
           } else if (block.type === 'table_pelanggaran') {
             // TABEL BESAR 58 DAFTAR PELANGGARAN
-            let rowsHtml = '';
+          let rowsHtml = '';
             block.data.forEach((row, idx) => {
                let bgRow = (row[1] === "Ringan") ? "bg-white dark:bg-prudent-darkCard" :
                            (row[1] === "Sedang") ? "bg-amber-400/20 dark:bg-amber-400/20" :
@@ -1204,31 +1204,18 @@ function renderPasalContent(bab) {
                                 (row[1] === "Berat") ? "bg-orange-400/20 text-orange-800 dark:bg-orange-400/20 dark:text-orange-300 font-bold" :
                                 "bg-red-500/20 text-red-700 dark:bg-red-500/20 dark:text-red-300 font-extrabold";
 
+               // Format teks kategori agar jika ada spasi, berubah jadi baris baru di dalam 1 box yang sama dan rata tengah
+               let formattedKategori = row[1].replace(" ", "<br>");
+
                rowsHtml += `
                  <tr class="${bgRow} border-b border-slate-100 dark:border-prudent-darkBorder">
                    <td class="px-3 py-2.5 text-center text-slate-500 font-bold">${idx + 1}</td>
                    <td class="px-3 py-2.5 font-semibold text-slate-700 dark:text-slate-200">${row[0]}</td>
-                   <td class="px-3 py-2.5"><span class="px-2.5 py-1 rounded-md text-[10px] uppercase tracking-wider ${badgeColor}">${row[1]}</span></td>
+                   <td class="px-3 py-2.5 text-center"><span class="inline-block px-3 py-1 rounded-md text-[10px] uppercase tracking-wider leading-tight text-center ${badgeColor}">${formattedKategori}</span></td>
                    <td class="px-3 py-2.5 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${row[2]}</td>
                  </tr>
                `;
             });
-            pasalContentHtml += `
-              <div class="mt-4 overflow-x-auto rounded-2xl border border-slate-200 dark:border-prudent-darkBorder shadow-sm">
-                <table class="w-full text-[11px] md:text-xs text-left">
-                  <thead class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-prudent-darkBorder uppercase text-[10px] tracking-wider">
-                    <tr>
-                      <th class="px-3 py-2 text-center w-10">No</th>
-                      <th class="px-3 py-2 w-1/2">Jenis Pelanggaran</th>
-                      <th class="px-3 py-2">Kategori</th>
-                      <th class="px-3 py-2 w-1/3">Pembinaan/Sanksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>${rowsHtml}</tbody>
-                </table>
-              </div>
-            `;
-          } else if (block.type === 'flowchart') {
             // DIAGRAM ALUR TEKS LAMPIRAN 3
             pasalContentHtml += `
               <div class="mt-4 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-200 dark:border-prudent-darkBorder overflow-x-auto text-[10px] md:text-xs whitespace-pre font-mono text-slate-700 dark:text-slate-300 leading-tight">
