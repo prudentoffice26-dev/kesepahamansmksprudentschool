@@ -793,6 +793,15 @@ const kesepahamanData = [
           { type: "p", text: "Untuk pelanggaran kategori ringan yang dikenai teguran lisan, pembinaan diberikan paling banyak 3 (tiga) kali. Apabila Prudent tetap mengulangi pelanggaran yang sama setelah menerima 3 (tiga) kali teguran lisan, maka penanganan ditingkatkan ke tahap pembinaan berikutnya berupa teguran tertulis dan/atau pembinaan oleh Mentor, atau pihak Kesiswaan sesuai tingkat pelanggaran." },
           { 
             type: "table_pelanggaran",
+            let bgRow = (row[1] === "Ringan") ? "bg-white dark:bg-prudent-darkCard" :
+                           (row[1] === "Sedang") ? "bg-amber-400/20 dark:bg-amber-400/20" :
+                           (row[1] === "Berat") ? "bg-orange-500/20 dark:bg-orange-400/20" :
+                           "bg-red-500/20 dark:bg-red-500/20";
+               
+               let badgeColor = (row[1] === "Ringan") ? "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300" :
+                                (row[1] === "Sedang") ? "bg-amber-400/20 text-amber-800 dark:bg-amber-400/20 dark:text-amber-300 font-bold" :
+                                (row[1] === "Berat") ? "bg-orange-400/20 text-orange-800 dark:bg-orange-400/20 dark:text-orange-300 font-bold" :
+                                "bg-red-500/20 text-red-700 dark:bg-red-500/20 dark:text-red-300 font-extrabold";
             data: [
               ["Tidak memakai name tag", "Ringan", "Teguran lisan"],
               ["Tidak memakai dasi", "Ringan", "Teguran lisan"],
