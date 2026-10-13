@@ -793,15 +793,6 @@ const kesepahamanData = [
           { type: "p", text: "Untuk pelanggaran kategori ringan yang dikenai teguran lisan, pembinaan diberikan paling banyak 3 (tiga) kali. Apabila Prudent tetap mengulangi pelanggaran yang sama setelah menerima 3 (tiga) kali teguran lisan, maka penanganan ditingkatkan ke tahap pembinaan berikutnya berupa teguran tertulis dan/atau pembinaan oleh Mentor, atau pihak Kesiswaan sesuai tingkat pelanggaran." },
           { 
             type: "table_pelanggaran",
-            let bgRow = (row[1] === "Ringan") ? "bg-white dark:bg-prudent-darkCard" :
-                           (row[1] === "Sedang") ? "bg-amber-400/20 dark:bg-amber-400/20" :
-                           (row[1] === "Berat") ? "bg-orange-500/20 dark:bg-orange-400/20" :
-                           "bg-red-500/20 dark:bg-red-500/20";
-               
-               let badgeColor = (row[1] === "Ringan") ? "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300" :
-                                (row[1] === "Sedang") ? "bg-amber-400/20 text-amber-800 dark:bg-amber-400/20 dark:text-amber-300 font-bold" :
-                                (row[1] === "Berat") ? "bg-orange-400/20 text-orange-800 dark:bg-orange-400/20 dark:text-orange-300 font-bold" :
-                                "bg-red-500/20 text-red-700 dark:bg-red-500/20 dark:text-red-300 font-extrabold";
             data: [
               ["Tidak memakai name tag", "Ringan", "Teguran lisan"],
               ["Tidak memakai dasi", "Ringan", "Teguran lisan"],
@@ -1204,20 +1195,20 @@ function renderPasalContent(bab) {
             let rowsHtml = '';
             block.data.forEach((row, idx) => {
                let bgRow = (row[1] === "Ringan") ? "bg-white dark:bg-prudent-darkCard" :
-                           (row[1] === "Sedang") ? "bg-yellow-50/50 dark:bg-yellow-900/10" :
-                           (row[1] === "Berat") ? "bg-orange-50/50 dark:bg-orange-900/10" :
-                           "bg-red-50/50 dark:bg-red-900/10";
+                           (row[1] === "Sedang") ? "bg-amber-400/20 dark:bg-amber-400/20" :
+                           (row[1] === "Berat") ? "bg-orange-500/20 dark:bg-orange-400/20" :
+                           "bg-red-500/20 dark:bg-red-500/20";
                
-               let badgeColor = (row[1] === "Ringan") ? "bg-slate-100 text-slate-600" :
-                                (row[1] === "Sedang") ? "bg-yellow-100 text-yellow-700" :
-                                (row[1] === "Berat") ? "bg-orange-100 text-orange-700" :
-                                "bg-red-100 text-red-700 font-extrabold";
+               let badgeColor = (row[1] === "Ringan") ? "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300" :
+                                (row[1] === "Sedang") ? "bg-amber-400/20 text-amber-800 dark:bg-amber-400/20 dark:text-amber-300 font-bold" :
+                                (row[1] === "Berat") ? "bg-orange-400/20 text-orange-800 dark:bg-orange-400/20 dark:text-orange-300 font-bold" :
+                                "bg-red-500/20 text-red-700 dark:bg-red-500/20 dark:text-red-300 font-extrabold";
 
                rowsHtml += `
                  <tr class="${bgRow} border-b border-slate-100 dark:border-prudent-darkBorder">
                    <td class="px-3 py-2.5 text-center text-slate-500 font-bold">${idx + 1}</td>
                    <td class="px-3 py-2.5 font-semibold text-slate-700 dark:text-slate-200">${row[0]}</td>
-                   <td class="px-3 py-2.5"><span class="px-2 py-0.5 rounded text-[9px] uppercase tracking-wider ${badgeColor}">${row[1]}</span></td>
+                   <td class="px-3 py-2.5"><span class="px-2.5 py-1 rounded-md text-[10px] uppercase tracking-wider ${badgeColor}">${row[1]}</span></td>
                    <td class="px-3 py-2.5 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${row[2]}</td>
                  </tr>
                `;
