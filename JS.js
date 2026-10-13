@@ -756,15 +756,6 @@ const kesepahamanData = [
   },
   {
     id: 10,
-    babLabel: "LEMBAR PENGESAHAN",
-    title: "LEMBAR PENGESAHAN DOKUMEN KESEPAHAMAN",
-    subtitle: "Tanda Tangan & Persetujuan Resmi TA 2026/2027",
-    deskripsi: "Bukti kesepakatan tertulis yang disahkan oleh Principal, Kesiswaan, Perwakilan Prudent, dan Perwakilan Orang Tua/Wali seluruh tingkat.",
-    isPengesahan: true
-  }
-  // ... (kode BAB IX sebelumnya ada di sini)
-    {
-    id: 10,
     babLabel: "BAB X",
     title: "BAB X: KETENTUAN PENUTUP",
     subtitle: "Pasal 35",
@@ -1112,10 +1103,10 @@ function initDarkMode() {
   }
 }
 
-// TAMPILKAN DAFTAR BAB SEBAGAI HALAMAN UTAMA DI MOBILE (RESET HIGHLIGHT HIJAU)
+// TAMPILKAN DAFTAR BAB SEBAGAI HALAMAN UTAMA DI MOBILE
 function showMobileList() {
   if (window.innerWidth < 768) {
-    activeBabId = null; // Reset highlight tombol agar kembali normal
+    activeBabId = null; 
     renderSidebarNav();
     babListSection.classList.remove("hidden");
     babDetailSection.classList.add("hidden");
@@ -1197,11 +1188,7 @@ function renderPasalContent(bab) {
         <span class="inline-block text-[10px] font-bold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">
           Halaman ${index + 1} dari ${lembarFiles.length}
         </span>
-        
-        <!-- CONTAINER PROTEKSI GAMBAR -->
-        <div class="relative w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-prudent-darkBorder bg-slate-50 dark:bg-slate-800 p-2 group">
-          
-          <!-- LAYER 1: WATERMARK OVERLAY -->
+        <div class="relative w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-prudent-darkBorder bg-slate-50 dark:bg-slate-800 p-2 min-h-[400px] flex items-center justify-center">
           <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none opacity-20 dark:opacity-30 rotate-[-20deg] select-none">
             <p class="text-slate-900 dark:text-white font-black text-xs md:text-xl uppercase tracking-widest text-center leading-relaxed">
               DOKUMEN RESMI SMK PRUDENT SCHOOL<br>
@@ -1209,16 +1196,13 @@ function renderPasalContent(bab) {
               TAHUN AJARAN 2026/2027
             </p>
           </div>
-
-          <!-- LAYER 2: TRANSPARENT SHIELD -->
           <div class="absolute inset-0 z-10 w-full h-full cursor-not-allowed" oncontextmenu="return false;"></div>
-
-          <!-- LAYER 3: GAMBAR ASLI DENGAN BACKGROUND-IMAGE -->
-          <div 
-            class="w-full h-auto min-h-[450px] md:min-h-[650px] rounded-xl bg-contain bg-center bg-no-repeat pointer-events-none"
-            style="background-image: url('${filename}');"
-          ></div>
-
+          <img 
+            src="${filename}" 
+            alt="Lembar Pengesahan ${index + 1}"
+            class="w-full h-auto max-h-[850px] object-contain rounded-xl pointer-events-none"
+            onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-8 text-xs text-red-400 font-semibold text-center z-30\'>Gambar ${filename} tidak ditemukan. Cek ejaan file/ekstensi!</div>';"
+          />
         </div>
       </div>
     `).join('');
@@ -1229,16 +1213,13 @@ function renderPasalContent(bab) {
           <h4 class="font-bold text-slate-800 dark:text-slate-100 text-sm md:text-base">Lembar Pengesahan Resmi</h4>
           <p class="text-xs text-slate-500 dark:text-slate-400">Dokumen Kesepahaman TA 2026/2027 SMK Prudent School (3 Halaman)</p>
         </div>
-        
-        <div class="space-y-8">
-          ${pagesHtml}
-        </div>
+        <div class="space-y-8">${pagesHtml}</div>
       </div>
     `;
     return;
   }
 
-  // TAMPILAN PASAL-PASAL BIASA (BAB I - IX)
+  // TAMPILAN PASAL-PASAL & LAMPIRAN
   if (bab.pasalList) {
     bab.pasalList.forEach((pasal) => {
       const pasalCard = document.createElement("div");
@@ -1256,13 +1237,9 @@ function renderPasalContent(bab) {
       if (pasal.blocks && pasal.blocks.length > 0) {
         pasal.blocks.forEach((block) => {
           if (block.type === 'title') {
-            pasalContentHtml += `
-              <h5 class="p-semibold text-slate-800 dark:text-slate-200 text-sm pt-1">${block.text}</h5>
-            `;
+            pasalContentHtml += `<h5 class="p-semibold text-slate-800 dark:text-slate-200 text-sm pt-1">${block.text}</h5>`;
           } else if (block.type === 'p') {
-            pasalContentHtml += `
-              <p class="p-normal text-slate-600 dark:text-slate-300">${block.text}</p>
-            `;
+            pasalContentHtml += `<p class="p-normal text-slate-600 dark:text-slate-300">${block.text}</p>`;
           } else if (block.type === 'list') {
             pasalContentHtml += `<ul class="space-y-1.5 pl-1 pt-0.5">`;
             block.items.forEach((itemText) => {
@@ -1274,42 +1251,109 @@ function renderPasalContent(bab) {
               `;
             });
             pasalContentHtml += `</ul>`;
+          } else if (block.type === 'table_pembiasaan') {
+            // TABEL PEMBIASAAN PAGI
+            pasalContentHtml += `
+              <div class="mt-3 overflow-x-auto rounded-2xl border border-slate-200 dark:border-prudent-darkBorder">
+                <table class="w-full text-[11px] text-left text-slate-700 dark:text-slate-200">
+                  <thead class="bg-teal-50/80 dark:bg-slate-800 text-prudent-blue dark:text-prudent-tealNeon font-bold border-b border-slate-200 dark:border-prudent-darkBorder">
+                    <tr><th class="px-3 py-2">HARI</th><th class="px-3 py-2">KEGIATAN PEMBIASAAN</th></tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100 dark:divide-prudent-darkBorder bg-white dark:bg-prudent-darkCard p-normal">
+                    <tr><td class="px-3 py-1.5 font-semibold">Senin pekan ke-1</td><td class="px-3 py-1.5">Upacara Bendera</td></tr>
+                    <tr><td class="px-3 py-1.5 font-semibold">Senin pekan ke-2</td><td class="px-3 py-1.5">Pengajian (Prudent Islam) / Kerohanian (Non-Muslim)</td></tr>
+                    <tr><td class="px-3 py-1.5 font-semibold">Senin pekan ke-3</td><td class="px-3 py-1.5">Pentas Seni (Pensi)</td></tr>
+                    <tr><td class="px-3 py-1.5 font-semibold">Senin pekan ke-4</td><td class="px-3 py-1.5">Penyuluhan</td></tr>
+                    <tr><td class="px-3 py-1.5 font-semibold">Selasa</td><td class="px-3 py-1.5">Literasi</td></tr>
+                    <tr><td class="px-3 py-1.5 font-semibold">Rabu</td><td class="px-3 py-1.5">English Day</td></tr>
+                    <tr><td class="px-3 py-1.5 font-semibold">Kamis</td><td class="px-3 py-1.5">Numerasi</td></tr>
+                    <tr><td class="px-3 py-1.5 font-semibold">Jumat</td><td class="px-3 py-1.5">Pembacaan Asmaul Husna & Kegiatan Keagamaan</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            `;
+          } else if (block.type === 'table_pelanggaran') {
+            // TABEL BESAR 58 DAFTAR PELANGGARAN
+            let rowsHtml = '';
+            block.data.forEach((row, idx) => {
+               let bgRow = (row[1] === "Ringan") ? "bg-white dark:bg-prudent-darkCard" :
+                           (row[1] === "Sedang") ? "bg-yellow-50/50 dark:bg-yellow-900/10" :
+                           (row[1] === "Berat") ? "bg-orange-50/50 dark:bg-orange-900/10" :
+                           "bg-red-50/50 dark:bg-red-900/10";
+               
+               let badgeColor = (row[1] === "Ringan") ? "bg-slate-100 text-slate-600" :
+                                (row[1] === "Sedang") ? "bg-yellow-100 text-yellow-700" :
+                                (row[1] === "Berat") ? "bg-orange-100 text-orange-700" :
+                                "bg-red-100 text-red-700 font-extrabold";
+
+               rowsHtml += `
+                 <tr class="${bgRow} border-b border-slate-100 dark:border-prudent-darkBorder">
+                   <td class="px-3 py-2.5 text-center text-slate-500 font-bold">${idx + 1}</td>
+                   <td class="px-3 py-2.5 font-semibold text-slate-700 dark:text-slate-200">${row[0]}</td>
+                   <td class="px-3 py-2.5"><span class="px-2 py-0.5 rounded text-[9px] uppercase tracking-wider ${badgeColor}">${row[1]}</span></td>
+                   <td class="px-3 py-2.5 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${row[2]}</td>
+                 </tr>
+               `;
+            });
+            pasalContentHtml += `
+              <div class="mt-4 overflow-x-auto rounded-2xl border border-slate-200 dark:border-prudent-darkBorder shadow-sm">
+                <table class="w-full text-[11px] md:text-xs text-left">
+                  <thead class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-prudent-darkBorder uppercase text-[10px] tracking-wider">
+                    <tr>
+                      <th class="px-3 py-2 text-center w-10">No</th>
+                      <th class="px-3 py-2 w-1/2">Jenis Pelanggaran</th>
+                      <th class="px-3 py-2">Kategori</th>
+                      <th class="px-3 py-2 w-1/3">Pembinaan/Sanksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>${rowsHtml}</tbody>
+                </table>
+              </div>
+            `;
+          } else if (block.type === 'flowchart') {
+            // DIAGRAM ALUR TEKS LAMPIRAN 3
+            pasalContentHtml += `
+              <div class="mt-4 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-200 dark:border-prudent-darkBorder overflow-x-auto text-[10px] md:text-xs whitespace-pre font-mono text-slate-700 dark:text-slate-300 leading-tight">
+Temuan Pelanggaran
+        ↓
+Klarifikasi & Verifikasi
+Pencatatan di Prunus DigiApps
+        ↓
+Pembinaan
+        ↓
+Evaluasi Hasil Pembinaan
+        ↓
+  ◇ Perilaku Membaik? ◇
+ ┌──────────┴─────────┐ 
+ Ya                 Tidak 
+ ↓                    ↓
+Monitoring      Pemanggilan Orang Tua
+Berkala         Penerbitan SP
+                      ↓
+                Sidang Tim Kedisiplinan
+                      ↓
+                Keputusan Principal
+                      ↓
+                Monitoring & Evaluasi Akhir
+              </div>
+            `;
           }
         });
       }
 
       pasalContentHtml += `</div>`;
 
-      let tableHtml = "";
       if (pasal.isPasal22) {
-        tableHtml = `
+        pasalCard.innerHTML = pasalHeaderHtml + pasalContentHtml + `
           <div class="mt-3 pt-2 border-t border-slate-100 dark:border-prudent-darkBorder">
             <span class="text-[10px] font-bold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wide">Jadwal Pembiasaan Pagi (Pasal 22 Ayat 10)</span>
-            <div class="mt-1.5 overflow-x-auto rounded-2xl border border-slate-200 dark:border-prudent-darkBorder">
-              <table class="w-full text-[11px] text-left text-slate-700 dark:text-slate-200">
-                <thead class="bg-teal-50/80 dark:bg-slate-800 text-prudent-blue dark:text-prudent-tealNeon font-bold border-b border-slate-200 dark:border-prudent-darkBorder">
-                  <tr>
-                    <th class="px-3 py-2">HARI</th>
-                    <th class="px-3 py-2">KEGIATAN PEMBIASAAN</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100 dark:divide-prudent-darkBorder bg-white dark:bg-prudent-darkCard p-normal">
-                  <tr><td class="px-3 py-1.5 font-semibold">Senin pekan ke-1</td><td class="px-3 py-1.5">Upacara Bendera</td></tr>
-                  <tr><td class="px-3 py-1.5 font-semibold">Senin pekan ke-2</td><td class="px-3 py-1.5">Pengajian (Prudent Islam) / Kerohanian (Prudent Non-Muslim)</td></tr>
-                  <tr><td class="px-3 py-1.5 font-semibold">Senin pekan ke-3</td><td class="px-3 py-1.5">Pentas Seni (Pensi)</td></tr>
-                  <tr><td class="px-3 py-1.5 font-semibold">Senin pekan ke-4</td><td class="px-3 py-1.5">Penyuluhan</td></tr>
-                  <tr><td class="px-3 py-1.5 font-semibold">Selasa</td><td class="px-3 py-1.5">Literasi</td></tr>
-                  <tr><td class="px-3 py-1.5 font-semibold">Rabu</td><td class="px-3 py-1.5">English Day</td></tr>
-                  <tr><td class="px-3 py-1.5 font-semibold">Kamis</td><td class="px-3 py-1.5">Numerasi</td></tr>
-                  <tr><td class="px-3 py-1.5 font-semibold">Jumat</td><td class="px-3 py-1.5">Pembacaan Asmaul Husna & Kegiatan Keagamaan</td></tr>
-                </tbody>
-              </table>
-            </div>
+            ${pasal.blocks.find(b => b.type === 'table_pembiasaan') ? '' : `<div class="p-body text-xs mt-1">(Lihat jadwal pada Lampiran IV)</div>`}
           </div>
         `;
+      } else {
+        pasalCard.innerHTML = pasalHeaderHtml + pasalContentHtml;
       }
-
-      pasalCard.innerHTML = pasalHeaderHtml + pasalContentHtml + tableHtml;
+      
       detailPasalContainer.appendChild(pasalCard);
     });
   }
@@ -1392,7 +1436,7 @@ document.addEventListener('keydown', (e) => {
   ) {
     e.preventDefault();
     if (navigator.clipboard) {
-      navigator.clipboard.writeText(''); // Kosongkan clipboard
+      navigator.clipboard.writeText(''); 
     }
     alert('Dokumen dilindungi. Dilarang mengopi atau mengambil tangkapan layar!');
   }
