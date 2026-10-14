@@ -1093,9 +1093,9 @@ function renderSidebarNav() {
 function renderPasalContent(bab) {
   if (!detailPasalContainer) return;
   detailPasalContainer.innerHTML = "";
-// TAMPILAN KHUSUS 3 LEMBAR PENGESAHAN
+
+  // TAMPILAN KHUSUS 3 LEMBAR PENGESAHAN
   if (bab.isPengesahan) {
-    // Ganti URL di bawah ini dengan Direct Link Google Drive kamu yang benar
     const lembarFiles = [
       'https://drive.google.com/file/d/1r1ERxBVx7H2DX2RP_DCWkFcjz4rJ4Dzo/view?usp=drive_link',
       'https://drive.google.com/file/d/18Ly_bqRcLShQagCqt3xvwJaFjUdY53a0/view?usp=drive_link',
@@ -1137,30 +1137,122 @@ function renderPasalContent(bab) {
     `;
     return;
   }
-  
-    let pagesHtml = lembarFiles.map((filename, index) => `
-      <div class="space-y-2">
-        <span class="inline-block text-[10px] font-bold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">
-          Halaman ${index + 1} dari ${lembarFiles.length}
-        </span>
-        <div class="relative w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-prudent-darkBorder bg-slate-50 dark:bg-slate-800 p-2 min-h-[400px] flex items-center justify-center">
-          <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none opacity-20 dark:opacity-30 rotate-[-20deg] select-none">
-            <p class="text-slate-900 dark:text-white font-black text-xs md:text-xl uppercase tracking-widest text-center leading-relaxed">
-              DOKUMEN RESMI SMK PRUDENT SCHOOL<br>
-              CONFIDENTIAL • DO NOT COPY • NO SCREENSHOT<br>
-              TAHUN AJARAN 2026/2027
-            </p>
-          </div>
-          <div class="absolute inset-0 z-10 w-full h-full cursor-not-allowed" oncontextmenu="return false;"></div>
-          <img 
-            src="${filename}" 
-            alt="Lembar Pengesahan ${index + 1}"
-            class="w-full h-auto max-h-[850px] object-contain rounded-xl pointer-events-none"
-            onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-8 text-xs text-red-400 font-semibold text-center z-30\'>Gambar ${filename} tidak ditemukan. Cek ejaan file/ekstensi!</div>';"
-          />
+
+  // TAMPILAN PASAL-PASAL & LAMPIRAN
+  if (bab.pasalList) {
+    bab.pasalList.forEach((pasal) => {
+      const pasalCard = document.createElement("div");
+      pasalCard.className = "bg-white dark:bg-prudent-darkCard p-5 md:p-6 rounded-2xl border border-slate-200/80 dark:border-prudent-darkBorder shadow-xs space-y-3";
+
+      let pasalHeaderHtml = `
+        <div class="border-b border-slate-100 dark:border-prudent-darkBorder pb-2">
+          <span class="text-[10px] font-bold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-widest">${pasal.nomor}</span>
+          <h4 class="font-bold text-slate-800 dark:text-slate-100 text-sm md:text-base tracking-tight">${pasal.judul}</h4>
         </div>
-      </div>
-    `).join('');
+      `;
+
+      let pasalContentHtml = `<div class="p-body space-y-2">`;
+
+      if (pasal.blocks && pasal.blocks.length > 0) {
+        pasal.blocks.forEach((block) => {
+          if (block.type === 'title') {
+            pasalContentHtml += `<h5 class="p-semibold text-slate-800 dark:text-slate-200 text-sm pt-1">${block.text}</h5>`;
+          } else if (block.type === 'p') {
+            pasalContentHtml += `<p class="p-normal text-slate-600 dark:text-slate-300">${block.text}</p>`;
+          } else if (block.type === 'list') {
+            pasalContentHtml += `<ul class="space-y-1.5 pl-1 pt-0.5">`;
+            block.items.forEach((itemText) => {
+              pasalContentHtml += `
+                <li class="flex items-start gap-2 p-normal text-slate-600 dark:text-slate-300">
+                  <span class="text-slate-400 dark:text-slate-500 font-bold select-none">•</span>
+                  <span class="flex-1">${itemText}</span>
+                </li>
+              `;
+            });
+            pasalContentHtml += `</ul>`;
+          } else if (block.type === 'table_pembiasaan') {
+            pasalContentHtml += `
+              <div class="mt-3 overflow-x-auto rounded-2xl border border-slate-200 dark:border-prudent-darkBorder">
+                <table class="w-full text-[11px] text-left text-slate-700 dark:text-slate-200">
+                  <thead class="bg-teal-50/80 dark:bg-slate-800 text-prudent-blue dark:text-prudent-tealNeon font-bold border-b border-slate-200 dark:border-prudent-darkBorder">
+                    <tr><th class="px-3 py-2">HARI</th><th class="px-3 py-2">KEGIATAN PEMBIASAAN</th></tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100 dark:divide-prudent-darkBorder bg-white dark:bg-prudent-darkCard p-normal">
+                    <tr><td class="px-3 py-1.5 font-semibold">Senin pekan ke-1</td><td class="px-3 py-1.5">Upacara Bendera</td></tr>
+                    <tr><td class="px-3 py-1.5 font-semibold">Senin pekan ke-2</td><td class="px-3 py-1.5">Pengajian (Prudent Islam) / Kerohanian (Non-Muslim)</td></tr>
+                    <tr><td class="px-3 py-1.5 font-semibold">Senin pekan ke-3</td><td class="px-3 py-1.5">Pentas Seni (Pensi)</td></tr>
+                    <tr><td class="px-3 py-1.5 font-semibold">Senin pekan ke-4</td><td class="px-3 py-1.5">Penyuluhan</td></tr>
+                    <tr><td class="px-3 py-1.5 font-semibold">Selasa</td><td class="px-3 py-1.5">Literasi</td></tr>
+                    <tr><td class="px-3 py-1.5 font-semibold">Rabu</td><td class="px-3 py-1.5">English Day</td></tr>
+                    <tr><td class="px-3 py-1.5 font-semibold">Kamis</td><td class="px-3 py-1.5">Numerasi</td></tr>
+                    <tr><td class="px-3 py-1.5 font-semibold">Jumat</td><td class="px-3 py-1.5">Pembacaan Asmaul Husna & Kegiatan Keagamaan</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            `;
+          } else if (block.type === 'table_pelanggaran') {
+            let rowsHtml = '';
+            block.data.forEach((row, idx) => {
+               let bgRow = (row[1] === "Ringan") ? "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300" :
+                           (row[1] === "Sedang") ? "bg-amber-400/20 dark:bg-amber-400/20" :
+                           (row[1] === "Berat") ? "bg-orange-500/20 dark:bg-orange-400/20" :
+                           "bg-red-500/20 dark:bg-red-500/20";
+               
+               let badgeColor = (row[1] === "Ringan") ? "bg-blue-400/20 text-blue-800 dark:bg-blue-400/20 dark:text-blue-300 font-bold" :
+                                (row[1] === "Sedang") ? "bg-amber-400/20 text-amber-800 dark:bg-amber-400/20 dark:text-amber-300 font-bold" :
+                                (row[1] === "Berat") ? "bg-orange-400/20 text-orange-800 dark:bg-orange-400/20 dark:text-orange-300 font-bold" :
+                                "bg-red-500/20 text-red-700 dark:bg-red-500/20 dark:text-red-300 font-extrabold";
+
+               let formattedKategori = row[1].replace(" ", "<br>");
+
+               rowsHtml += `
+                 <tr class="${bgRow} border-b border-slate-100 dark:border-prudent-darkBorder">
+                   <td class="px-3 py-2.5 text-center text-slate-500 font-bold">${idx + 1}</td>
+                   <td class="px-3 py-2.5 font-semibold text-slate-700 dark:text-slate-200">${row[0]}</td>
+                   <td class="px-3 py-2.5 text-center"><span class="inline-block px-3 py-1 rounded-md text-[10px] uppercase tracking-wider leading-tight text-center ${badgeColor}">${formattedKategori}</span></td>
+                   <td class="px-3 py-2.5 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${row[2]}</td>
+                 </tr>
+               `;
+            });
+            pasalContentHtml += `
+              <div class="mt-4 overflow-x-auto rounded-2xl border border-slate-200 dark:border-prudent-darkBorder shadow-sm">
+                <table class="w-full text-[11px] md:text-xs text-left">
+                  <thead class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-prudent-darkBorder uppercase text-[10px] tracking-wider">
+                    <tr>
+                      <th class="px-3 py-2 text-center w-10">No</th>
+                      <th class="px-3 py-2 w-1/2">Jenis Pelanggaran</th>
+                      <th class="px-3 py-2 text-center">Kategori</th>
+                      <th class="px-3 py-2 w-1/3">Pembinaan/Sanksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>${rowsHtml}</tbody>
+                </table>
+              </div>
+            `;
+          } else if (block.type === 'flowchart') {
+            pasalContentHtml += `
+              <div class="mt-4 flex flex-col items-center space-y-3 py-4 max-w-xl mx-auto select-none">
+                <div class="w-full bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-prudent-darkBorder p-3.5 rounded-xl shadow-xs text-center">
+                  <span class="text-[9px] font-semibold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 1</span>
+                  <p class="text-xs font-semibold text-slate-800 dark:text-slate-100">Temuan Pelanggaran</p>
+                </div>
+                <div class="text-slate-400 dark:text-slate-500 text-sm font-bold">↓</div>
+                <div class="w-full bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-prudent-darkBorder p-3.5 rounded-xl shadow-xs text-center">
+                  <span class="text-[9px] font-semibold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 2</span>
+                  <p class="text-xs font-semibold text-slate-800 dark:text-slate-100">Klarifikasi & Verifikasi</p>
+                </div>
+              </div>
+            `;
+          }
+        });
+      }
+
+      pasalContentHtml += `</div>`;
+      pasalCard.innerHTML = pasalHeaderHtml + pasalContentHtml;
+      detailPasalContainer.appendChild(pasalCard);
+    });
+  }
+}
 
     detailPasalContainer.innerHTML = `
       <div class="bg-white dark:bg-prudent-darkCard p-5 md:p-6 rounded-2xl border border-slate-200/80 dark:border-prudent-darkBorder text-center space-y-6 shadow-xs select-none">
