@@ -1253,7 +1253,6 @@ function renderPasalContent(bab) {
     });
   }
 }
-
     detailPasalContainer.innerHTML = `
       <div class="bg-white dark:bg-prudent-darkCard p-5 md:p-6 rounded-2xl border border-slate-200/80 dark:border-prudent-darkBorder text-center space-y-6 shadow-xs select-none">
         <div>
