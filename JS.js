@@ -1439,43 +1439,14 @@ window.addEventListener("resize", () => {
   }
 });
 
-
 // =========================================================================
-// SISTEM KEAMANAN GLOBAL (ANTI KLIK KANAN, ANTI COPY, ANTI INSPECT & BLUR)
+// SISTEM KEAMANAN GLOBAL (ANTI KLIK KANAN, ANTI COPY, ANTI INSPECT & PROTEKSI)
 // =========================================================================
 
 // 1. Matikan Klik Kanan
 document.addEventListener('contextmenu', (e) => e.preventDefault());
 
-// 2. Blokir Shortcut Keyboard
-document.addEventListener('keydown', (e) => {
-  if (
-    e.key === 'PrintScreen' ||
-    (e.ctrlKey && ['c', 'p', 'u', 's'].includes(e.key.toLowerCase())) ||
-    (e.ctrlKey && e.shiftKey && ['i', 'j', 'c'].includes(e.key.toLowerCase())) ||
-    e.key === 'F12'
-  ) {
-    e.preventDefault();
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(''); 
-    }
-    alert('Dokumen dilindungi. Dilarang mengopi atau mengambil tangkapan layar!');
-  }
-});
-
-// 3. Efek Blur Otomatis saat Layar Ditinggal / Pindah Aplikasi / Pakai Snipping Tool
-window.addEventListener('blur', () => {
-  document.body.style.filter = 'blur(15px)';
-});
-
-window.addEventListener('focus', () => {
-  document.body.style.filter = 'none';
-});
-// =========================================================================
-// TAMBAHAN PROTEKSI LANJUTAN (ANTI SCREENSHOT & INSPECT)
-// =========================================================================
-
-// 1. Mencegah Kombinasi Tombol Screenshot & Developer Tools
+// 2. Blokir Shortcut Keyboard, PrintScreen, & Developer Tools (Digabung jadi satu)
 document.addEventListener('keydown', (e) => {
   if (
     e.key === 'PrintScreen' ||
@@ -1485,7 +1456,7 @@ document.addEventListener('keydown', (e) => {
   ) {
     e.preventDefault();
     
-    // Kosongkan clipboard jika tombol PrintScreen ditekan
+    // Kosongkan atau amankan isi clipboard
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText('Proteksi Dokumen SMK Prudent School: Dilarang Mengambil Screenshot!');
     }
@@ -1495,9 +1466,9 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// 2. Mengosongkan Clipboard Otomatis jika Mendeteksi Perubahan Fokus (Mencegah Snipping Tool pihak ketiga)
+// 3. Efek Blur Otomatis saat Layar Ditinggal / Pindah Aplikasi (Cukup 1 fungsi)
 window.addEventListener('blur', () => {
-  document.body.style.filter = 'blur(20px)';
+  document.body.style.filter = 'blur(15px)';
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText('');
   }
@@ -1507,7 +1478,7 @@ window.addEventListener('focus', () => {
   document.body.style.filter = 'none';
 });
 
-// 3. Mencegah Dragging / Seret Gambar
+// 4. Mencegah Dragging / Seret Gambar
 document.addEventListener('dragstart', (e) => {
   if (e.target.nodeName === 'IMG') {
     e.preventDefault();
