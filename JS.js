@@ -1471,3 +1471,45 @@ window.addEventListener('blur', () => {
 window.addEventListener('focus', () => {
   document.body.style.filter = 'none';
 });
+// =========================================================================
+// TAMBAHAN PROTEKSI LANJUTAN (ANTI SCREENSHOT & INSPECT)
+// =========================================================================
+
+// 1. Mencegah Kombinasi Tombol Screenshot & Developer Tools
+document.addEventListener('keydown', (e) => {
+  if (
+    e.key === 'PrintScreen' ||
+    (e.ctrlKey && ['s', 'p', 'u', 'c'].includes(e.key.toLowerCase())) ||
+    (e.ctrlKey && e.shiftKey && ['i', 'j', 'c'].includes(e.key.toLowerCase())) ||
+    e.key === 'F12'
+  ) {
+    e.preventDefault();
+    
+    // Kosongkan clipboard jika tombol PrintScreen ditekan
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText('Proteksi Dokumen SMK Prudent School: Dilarang Mengambil Screenshot!');
+    }
+    
+    alert('Peringatan: Dokumen ini dilindungi kerahasiaannya. Dilarang mengambil tangkapan layar atau menyalin data!');
+    return false;
+  }
+});
+
+// 2. Mengosongkan Clipboard Otomatis jika Mendeteksi Perubahan Fokus (Mencegah Snipping Tool pihak ketiga)
+window.addEventListener('blur', () => {
+  document.body.style.filter = 'blur(20px)';
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText('');
+  }
+});
+
+window.addEventListener('focus', () => {
+  document.body.style.filter = 'none';
+});
+
+// 3. Mencegah Dragging / Seret Gambar
+document.addEventListener('dragstart', (e) => {
+  if (e.target.nodeName === 'IMG') {
+    e.preventDefault();
+  }
+});
