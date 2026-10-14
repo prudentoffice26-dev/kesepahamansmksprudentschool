@@ -1096,12 +1096,11 @@ function renderPasalContent(bab) {
 
   // TAMPILAN KHUSUS 3 LEMBAR PENGESAHAN
   if (bab.isPengesahan) {
-    const lembarFiles = [
-      'https://drive.google.com/file/d/1r1ERxBVx7H2DX2RP_DCWkFcjz4rJ4Dzo/view?usp=sharing',
-      'https://drive.google.com/file/d/18Ly_bqRcLShQagCqt3xvwJaFjUdY53a0/view?usp=drive_link',
-      'https://drive.google.com/file/d/1eFGTlc0q5vXKrY_584vhOvZ5VcLzbM0-/view?usp=drive_link'
-    ];
-
+         const lembarFiles = [
+        'https://lh3.googleusercontent.com/d/1r1ERxBVx7H2DX2RP_DCWkFcjz4rJ4Dzo',
+        'https://lh3.googleusercontent.com/d/18Ly_bqRcLShQagCqt3xvwJaFjUdY53a0',
+        'https://lh3.googleusercontent.com/d/1eFGTlc0q5vXKrY_584vhOvZ5VcLzbM0-'
+      ];
     let pagesHtml = lembarFiles.map((filename, index) => `
       <div class="space-y-2">
         <span class="inline-block text-[10px] font-bold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">
