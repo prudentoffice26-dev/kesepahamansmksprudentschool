@@ -1089,7 +1089,7 @@ function renderSidebarNav() {
   });
 }
 
-// RENDER KONTEN PASAL DI PANEL DETAIL
+/// RENDER KONTEN PASAL DI PANEL DETAIL
 function renderPasalContent(bab) {
   if (!detailPasalContainer) return;
   detailPasalContainer.innerHTML = "";
