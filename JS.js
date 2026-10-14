@@ -1097,9 +1097,9 @@ function renderPasalContent(bab) {
   // TAMPILAN KHUSUS 3 LEMBAR PENGESAHAN
   if (bab.isPengesahan) {
     const lembarFiles = [
-      'KESEPAHAMAN SMK PRUDENT SCHOOL SAH-1.png',
-      'KESEPAHAMAN SMK PRUDENT SCHOOL SAH-2.png',
-      'KESEPAHAMAN SMK PRUDENT SCHOOL SAH-3.png'
+      'https://drive.google.com/file/d/1r1ERxBVx7H2DX2RP_DCWkFcjz4rJ4Dzo/view?usp=sharing',
+      'https://drive.google.com/file/d/18Ly_bqRcLShQagCqt3xvwJaFjUdY53a0/view?usp=drive_link',
+      'https://drive.google.com/file/d/1eFGTlc0q5vXKrY_584vhOvZ5VcLzbM0-/view?usp=drive_link'
     ];
 
     let pagesHtml = lembarFiles.map((filename, index) => `
