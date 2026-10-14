@@ -1098,9 +1098,9 @@ function renderPasalContent(bab) {
    if (bab.isPengesahan) {
       // Ganti string di bawah ini dengan Direct Link dari Google Drive kamu
       const lembarFiles = [
-        'https://drive.google.com/file/d/1r1ERxBVx7H2DX2RP_DCWkFcjz4rJ4Dzo/view?usp=drive_link,
+        'https://drive.google.com/file/d/1r1ERxBVx7H2DX2RP_DCWkFcjz4rJ4Dzo/view?usp=drive_link',
         'https://drive.google.com/file/d/18Ly_bqRcLShQagCqt3xvwJaFjUdY53a0/view?usp=drive_link',
-        'https://drive.google.com/file/d/1eFGTlc0q5vXKrY_584vhOvZ5VcLzbM0-/view?usp=drive_link
+        'https://drive.google.com/file/d/1eFGTlc0q5vXKrY_584vhOvZ5VcLzbM0-/view?usp=drive_link'
       ];
   
       let pagesHtml = lembarFiles.map((url, index) => `
