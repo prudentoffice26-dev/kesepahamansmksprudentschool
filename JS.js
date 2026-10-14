@@ -1095,13 +1095,49 @@ function renderPasalContent(bab) {
   detailPasalContainer.innerHTML = "";
 
   // TAMPILAN KHUSUS 3 LEMBAR PENGESAHAN
-  if (bab.isPengesahan) {
-    const lembarFiles = [
-      'KESEPAHAMAN SMK PRUDENT SCHOOL SAH-1.png',
-      'KESEPAHAMAN SMK PRUDENT SCHOOL SAH-2.png',
-      'KESEPAHAMAN SMK PRUDENT SCHOOL SAH-3.png'
-    ];
-
+   if (bab.isPengesahan) {
+      // Ganti string di bawah ini dengan Direct Link dari Google Drive kamu
+      const lembarFiles = [
+        'https://drive.google.com/file/d/1r1ERxBVx7H2DX2RP_DCWkFcjz4rJ4Dzo/view?usp=drive_link,
+        'https://drive.google.com/file/d/18Ly_bqRcLShQagCqt3xvwJaFjUdY53a0/view?usp=drive_link',
+        'https://drive.google.com/file/d/1eFGTlc0q5vXKrY_584vhOvZ5VcLzbM0-/view?usp=drive_link
+      ];
+  
+      let pagesHtml = lembarFiles.map((url, index) => `
+        <div class="space-y-2">
+          <span class="inline-block text-[10px] font-bold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">
+            Halaman ${index + 1} dari ${lembarFiles.length}
+          </span>
+          <div class="relative w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-prudent-darkBorder bg-slate-50 dark:bg-slate-800 p-2 min-h-[400px] flex items-center justify-center">
+            <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none opacity-20 dark:opacity-30 rotate-[-20deg] select-none">
+              <p class="text-slate-900 dark:text-white font-black text-xs md:text-xl uppercase tracking-widest text-center leading-relaxed">
+                DOKUMEN RESMI SMK PRUDENT SCHOOL<br>
+                CONFIDENTIAL • DO NOT COPY • NO SCREENSHOT<br>
+                TAHUN AJARAN 2026/2027
+              </p>
+            </div>
+            <div class="absolute inset-0 z-10 w-full h-full cursor-not-allowed" oncontextmenu="return false;"></div>
+            <img 
+              src="${url}" 
+              alt="Lembar Pengesahan ${index + 1}"
+              class="w-full h-auto max-h-[850px] object-contain rounded-xl pointer-events-none"
+              onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-8 text-xs text-red-400 font-semibold text-center z-30\'>Gagal memuat gambar dari Google Drive. Periksa kembali link/ID file!</div>';"
+            />
+          </div>
+        </div>
+      `).join('');
+  
+      detailPasalContainer.innerHTML = `
+        <div class="bg-white dark:bg-prudent-darkCard p-5 md:p-6 rounded-2xl border border-slate-200/80 dark:border-prudent-darkBorder text-center space-y-6 shadow-xs select-none">
+          <div>
+            <h4 class="font-bold text-slate-800 dark:text-slate-100 text-sm md:text-base">Lembar Pengesahan Resmi</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Dokumen Kesepahaman TA 2026/2027 SMK Prudent School (3 Halaman)</p>
+          </div>
+          <div class="space-y-8">${pagesHtml}</div>
+        </div>
+      `;
+      return;
+    }
     let pagesHtml = lembarFiles.map((filename, index) => `
       <div class="space-y-2">
         <span class="inline-block text-[10px] font-bold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">
