@@ -1096,12 +1096,13 @@ function renderPasalContent(bab) {
 
   // TAMPILAN KHUSUS 3 LEMBAR PENGESAHAN
   if (bab.isPengesahan) {
-         const lembarFiles = [
-        'https://lh3.googleusercontent.com/d/1r1ERxBVx7H2DX2RP_DCWkFcjz4rJ4Dzo',
-        'https://lh3.googleusercontent.com/d/18Ly_bqRcLShQagCqt3xvwJaFjUdY53a0',
-        'https://lh3.googleusercontent.com/d/1eFGTlc0q5vXKrY_584vhOvZ5VcLzbM0-'
-      ];
-    let pagesHtml = lembarFiles.map((filename, index) => `
+    const lembarFiles = [
+      'https://lh3.googleusercontent.com/d/1r1ERxBVx7H2DX2RP_DCWkFcjz4rJ4Dzo',
+      'https://lh3.googleusercontent.com/d/18Ly_bqRcLShQagCqt3xvwJaFjUdY53a0',
+      'https://lh3.googleusercontent.com/d/1eFGTlc0q5vXKrY_584vhOvZ5VcLzbM0-'
+    ];
+
+    let pagesHtml = lembarFiles.map((url, index) => `
       <div class="space-y-2">
         <span class="inline-block text-[10px] font-bold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">
           Halaman ${index + 1} dari ${lembarFiles.length}
@@ -1116,10 +1117,10 @@ function renderPasalContent(bab) {
           </div>
           <div class="absolute inset-0 z-10 w-full h-full cursor-not-allowed" oncontextmenu="return false;"></div>
           <img 
-            src="${filename}" 
+            src="${url}" 
             alt="Lembar Pengesahan ${index + 1}"
             class="w-full h-auto max-h-[850px] object-contain rounded-xl pointer-events-none"
-            onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-8 text-xs text-red-400 font-semibold text-center z-30\'>Gambar ${filename} tidak ditemukan. Cek ejaan file/ekstensi!</div>';"
+            onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-8 text-xs text-red-400 font-semibold text-center z-30\'>Gagal memuat gambar dari Google Drive. Periksa kembali link/ID file!</div>';"
           />
         </div>
       </div>
