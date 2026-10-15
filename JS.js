@@ -464,7 +464,7 @@ const kesepahamanData = [
           },
           { type: "p", text: "(9) Pembiasaan keagamaan pada hari Senin sampai dengan Jumat dilaksanakan dalam bentuk solawatan bagi Prudent beragama Islam, sedangkan Prudent yang beragama non muslim membaca doa sesuai agama dan kepercayaannya." },
           { type: "p", text: "(10) Kegiatan pembiasaan sekolah dilaksanakan dengan ketentuan sesuai tabel jadwal di bawah." },
-          { type: "table_pembiasaan" }, // <-- Tabel pembiasaan dimunculkan kembali di sini
+          { type: "table_pembiasaan" },
           { type: "p", text: "(11) Prudent wajib mengikuti seluruh kegiatan pagi dan pembiasaan sekolah dengan tertib, disiplin, dan bertanggung jawab." },
           { type: "p", text: "(12) Prudent wajib mengikuti kegiatan keagamaan, pembiasaan, dan kegiatan sekolah yang telah dijadwalkan." },
           { type: "p", text: "(13) Prudent tidak diperkenankan meninggalkan lingkungan sekolah selama jam pembelajaran maupun kegiatan sekolah tanpa izin dari pihak yang berwenang." },
@@ -778,12 +778,12 @@ const kesepahamanData = [
     id: 11,
     babLabel: "LAMPIRAN",
     title: "LAMPIRAN DOKUMEN",
-    subtitle: "SOP, Tabel Pelanggaran & Tata Tertib",
-    deskripsi: "Berisi kumpulan Lampiran I (Tabel Pelanggaran), Lampiran II (Tahapan Pembinaan), Lampiran III (SOP Penanganan), dan Lampiran IV (SOP Guru Piket).",
+    subtitle: "SOP, Penjelasan Pelanggaran & Tata Tertib",
+    deskripsi: "Berisi kumpulan Lampiran I (Ketentuan Pelanggaran), Lampiran II (Tahapan Pembinaan), Lampiran III (SOP Penanganan), dan Lampiran IV (SOP Guru Piket).",
     pasalList: [
       {
         nomor: "LAMPIRAN I",
-        judul: "KETENTUAN DAN TABEL 58 PELANGGARAN",
+        judul: "KETENTUAN PELANGGARAN",
         blocks: [
           { type: "p", text: "Pembinaan dan sanksi diberikan secara bertahap, objektif, proporsional, edukatif, berkeadilan, serta mempertimbangkan tingkat pelanggaran, dan rekam jejak Prudent." },
           { type: "p", text: "Prudent yang mengulangi pelanggaran dapat dikenakan peningkatan kategori pembinaan dan sanksi." },
@@ -791,70 +791,7 @@ const kesepahamanData = [
           { type: "p", text: "Untuk pelanggaran yang mengakibatkan kerugian terhadap sekolah atau pihak lain, Prudent wajib melakukan penggantian, perbaikan, atau bentuk tanggung jawab lain sesuai ketentuan sekolah." },
           { type: "p", text: "Untuk pelanggaran yang diduga merupakan tindak pidana, sekolah dapat berkoordinasi dengan orang tua/wali serta instansi yang berwenang sesuai ketentuan peraturan perundang-undangan." },
           { type: "p", text: "Penetapan bentuk pembinaan dan sanksi dilakukan oleh sekolah berdasarkan hasil klarifikasi, pemeriksaan, dan pertimbangan Kesiswaan, Koordinator BK serta persetujuan Principal SMK Prudent School." },
-          { type: "p", text: "Untuk pelanggaran kategori ringan yang dikenai teguran lisan, pembinaan diberikan paling banyak 3 (tiga) kali. Apabila Prudent tetap mengulangi pelanggaran yang sama setelah menerima 3 (tiga) kali teguran lisan, maka penanganan ditingkatkan ke tahap pembinaan berikutnya berupa teguran tertulis dan/atau pembinaan oleh Mentor, atau pihak Kesiswaan sesuai tingkat pelanggaran." },
-          { 
-            type: "table_pelanggaran",
-            data: [
-              ["Tidak memakai name tag", "Ringan", "Teguran lisan"],
-              ["Tidak memakai dasi", "Ringan", "Teguran lisan"],
-              ["Tidak memakai ikat pinggang", "Ringan", "Teguran lisan"],
-              ["Tidak memakai atribut sekolah secara lengkap", "Ringan", "Teguran lisan"],
-              ["Tidak memakai topi pada upacara atau kegiatan yang diwajibkan", "Ringan", "Teguran lisan"],
-              ["Menggunakan seragam tidak sesuai jadwal yang ditentukan", "Ringan", "Teguran lisan"],
-              ["Kaos kaki tidak sesuai ketentuan", "Ringan", "Teguran lisan"],
-              ["Sepatu tidak sesuai ketentuan", "Ringan", "Teguran lisan"],
-              ["Rambut tidak sesuai ketentuan", "Ringan", "Pembinaan dan batas waktu perbaikan"],
-              ["Mewarnai rambut atau menggunakan model rambut yang dilarang", "Ringan", "Pembinaan dan batas waktu perbaikan"],
-              ["Tidak menggunakan hairnet/ciput sesuai ketentuan", "Ringan", "Teguran lisan"],
-              ["Seragam dimodifikasi atau tidak sesuai ukuran", "Ringan", "Pembinaan dan perbaikan saat itu juga"],
-              ["Celana atau rok dimodifikasi atau tidak sesuai ketentuan", "Ringan", "Pembinaan dan batas waktu perbaikan"],
-              ["Menggunakan make-up yang tidak sesuai ketentuan", "Ringan", "Teguran dan membersihkan riasan"],
-              ["Menggunakan parfum secara berlebihan", "Ringan", "Teguran lisan"],
-              ["Menggunakan aksesori/perhiasan yang tidak sesuai ketentuan", "Ringan", "Teguran lisan"],
-              ["Terlambat hadir ke sekolah", "Sedang", "Pembinaan Guru Piket/Mentor"],
-              ["Tidak melapor kepada guru piket setelah terlambat", "Sedang", "Pembinaan Guru Piket"],
-              ["Tidak mengikuti pembelajaran tanpa izin", "Sedang", "Pembinaan Mentor"],
-              ["Tidak mengikuti kegiatan keagamaan atau kegiatan sekolah tanpa alasan yang sah", "Sedang", "Pembinaan Mentor"],
-              ["Tidak mengikuti kegiatan nonkurikuler tanpa alasan", "Sedang", "Pembinaan Mentor/Mentor"],
-              ["Tidak mengikuti piket kelas", "Sedang", "Penugasan kebersihan"],
-              ["Tidak menjaga kebersihan lingkungan sekolah", "Sedang", "Penugasan kebersihan"],
-              ["Tidak membawa perlengkapan belajar", "Sedang", "Pembinaan Guru Mata Pelajaran"],
-              ["Tidak mengumpulkan tugas secara berulang", "Sedang", "Pembinaan Guru Mata Pelajaran"],
-              ["Mengganggu proses pembelajaran", "Sedang", "Pembinaan Guru Mata Pelajaran"],
-              ["Menggunakan telepon genggam tanpa izin guru", "Sedang", "Penyitaan sementara dan pembinaan"],
-              ["Menggunakan perangkat teknologi sekolah tidak sesuai ketentuan", "Sedang", "Pembinaan Guru/Mentor"],
-              ["Membolos", "Berat", "SP I dan Pemanggilan Orang Tua"],
-              ["Keluar lingkungan sekolah tanpa izin", "Berat", "SP I dan Pembinaan Kesiswaan"],
-              ["Menggunakan kendaraan yang tidak sesuai standar sekolah (misalnya knalpot bising/brong)", "Sedang", "Pembinaan dan larangan membawa kendaraan sementara"],
-              ["Tidak menyampaikan pemberitahuan ketidakhadiran sesuai prosedur sekolah", "Sedang", "Pembinaan Mentor"],
-              ["Menjalin hubungan khusus dengan lawan jenis/ berpacaran", "Berat", "SP I dan Pembinaan Mentor, BK, Kesiswaan"],
-              ["Menyalahgunakan jaringan internet, akun, atau fasilitas teknologi sekolah", "Berat", "SP II dan Pembinaan Kesiswaan"],
-              ["Berkumpul atau berada di luar lingkungan sekolah tanpa tujuan yang jelas", "Berat", "SP II dan Pembinaan Kesiswaan"],
-              ["Memalsukan surat izin atau tanda tangan", "Berat", "SP II dan Pemanggilan Orang Tua"],
-              ["Melakukan vandalisme atau merusak fasilitas sekolah", "Berat", "SP II dan mengganti kerugian"],
-              ["Melakukan bullying", "Berat", "SP II dan Pembinaan BK"],
-              ["Melakukan pertengkaran tanpa tindakan fisik", "Berat", "SP II dan Pembinaan BK"],
-              ["Menggunakan kata-kata kasar, menghina, ujaran kebencian, atau SARA", "Berat", "SP II dan Pembinaan BK"],
-              ["Menyebarkan hoaks, fitnah, atau informasi provokatif", "Berat", "SP II dan Pembinaan Kesiswaan"],
-              ["Mengunggah atau menyebarluaskan konten yang mencemarkan nama baik sekolah", "Berat", "SP II dan Pembinaan Kesiswaan"],
-              ["Merekam, memotret, atau menyebarluaskan dokumentasi sekolah tanpa izin", "Berat", "SP II dan Pembinaan Kesiswaan"],
-              ["Mengambil atau menggunakan barang milik orang lain tanpa izin", "Berat", "SP II dan Pemanggilan Orang Tua"],
-              ["Menolak mengikuti proses pembinaan yang ditetapkan sekolah", "Berat", "SP II dan Pemanggilan Orang Tua"],
-              ["Menggunakan identitas, logo, atau nama sekolah tanpa izin", "Berat", "SP II dan Pembinaan Kesiswaan"],
-              ["Melakukan plagiarisme atau kecurangan akademik", "Berat", "SP II dan Pembinaan Mentor/BK"],
-              ["Membawa senjata tajam tanpa izin", "Sangat Berat", "SP III, Pemanggilan Orang Tua, dan Sidang Kedisiplinan"],
-              ["Merokok atau menggunakan vape", "Sangat Berat", "SP III dan Sidang Kedisiplinan"],
-              ["Mengonsumsi atau membawa minuman keras", "Sangat Berat", "SP III dan Sidang Kedisiplinan"],
-              ["Membawa/menggunakan narkotika, psikotropika, dan zat adiktif lainnya", "Sangat Berat", "Dikembalikan kepada Orang Tua dan diproses hukum"],
-              ["Perkelahian atau tawuran", "Sangat Berat", "SP III dan Sidang Kedisiplinan"],
-              ["Terlibat/memprovokasi/memfasilitasi tawuran atau perkelahian", "Sangat Berat", "SP III dan Sidang Kedisiplinan"],
-              ["Pencurian", "Sangat Berat", "SP III, penggantian kerugian, dan tindakan kebijakan sekolah"],
-              ["Pemerasan atau perjudian", "Sangat Berat", "SP III dan Sidang Kedisiplinan"],
-              ["Pelecehan, kekerasan, atau intimidasi", "Sangat Berat", "SP III dan Sidang Kedisiplinan"],
-              ["Membawa/menyebarkan materi melanggar norma kesusilaan", "Sangat Berat", "SP III dan tindakan sesuai kebijakan sekolah"],
-              ["Memalsukan data akademik, administrasi, atau dokumen sekolah", "Sangat Berat", "SP III dan Sidang Kedisiplinan"]
-            ]
-          }
+          { type: "p", text: "Untuk pelanggaran kategori ringan yang dikenai teguran lisan, pembinaan diberikan paling banyak 3 (tiga) kali. Apabila Prudent tetap mengulangi pelanggaran yang sama setelah menerima 3 (tiga) kali teguran lisan, maka penanganan ditingkatkan ke tahap pembinaan berikutnya berupa teguran tertulis dan/atau pembinaan oleh Mentor, atau pihak Kesiswaan sesuai tingkat pelanggaran." }
         ]
       },
       {
@@ -1191,48 +1128,8 @@ function renderPasalContent(bab) {
                 </table>
               </div>
             `;
-          } else if (block.type === 'table_pelanggaran') {
-            // TABEL BESAR 58 DAFTAR PELANGGARAN
-            let rowsHtml = '';
-            block.data.forEach((row, idx) => {
-               let bgRow = (row[1] === "Ringan") ? "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300" :
-                           (row[1] === "Sedang") ? "bg-amber-400/20 dark:bg-amber-400/20" :
-                           (row[1] === "Berat") ? "bg-orange-500/20 dark:bg-orange-400/20" :
-                           "bg-red-500/20 dark:bg-red-500/20";
-               
-               let badgeColor = (row[1] === "Ringan") ? "bg-blue-400/20 text-blue-800 dark:bg-blue-400/20 dark:text-blue-300 font-bold" :
-                                (row[1] === "Sedang") ? "bg-amber-400/20 text-amber-800 dark:bg-amber-400/20 dark:text-amber-300 font-bold" :
-                                (row[1] === "Berat") ? "bg-orange-400/20 text-orange-800 dark:bg-orange-400/20 dark:text-orange-300 font-bold" :
-                                "bg-red-500/20 text-red-700 dark:bg-red-500/20 dark:text-red-300 font-extrabold";
-
-               let formattedKategori = row[1].replace(" ", "<br>");
-
-               rowsHtml += `
-                 <tr class="${bgRow} border-b border-slate-100 dark:border-prudent-darkBorder">
-                   <td class="px-3 py-2.5 text-center text-slate-500 font-bold">${idx + 1}</td>
-                   <td class="px-3 py-2.5 font-semibold text-slate-700 dark:text-slate-200">${row[0]}</td>
-                   <td class="px-3 py-2.5 text-center"><span class="inline-block px-3 py-1 rounded-md text-[10px] uppercase tracking-wider leading-tight text-center ${badgeColor}">${formattedKategori}</span></td>
-                   <td class="px-3 py-2.5 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${row[2]}</td>
-                 </tr>
-               `;
-            });
-            pasalContentHtml += `
-              <div class="mt-4 overflow-x-auto rounded-2xl border border-slate-200 dark:border-prudent-darkBorder shadow-sm">
-                <table class="w-full text-[11px] md:text-xs text-left">
-                  <thead class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-prudent-darkBorder uppercase text-[10px] tracking-wider">
-                    <tr>
-                      <th class="px-3 py-2 text-center w-10">No</th>
-                      <th class="px-3 py-2 w-1/2">Jenis Pelanggaran</th>
-                      <th class="px-3 py-2 text-center">Kategori</th>
-                      <th class="px-3 py-2 w-1/3">Pembinaan/Sanksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>${rowsHtml}</tbody>
-                </table>
-              </div>
-            `;
-            } else if (block.type === 'flowchart') {
-            // DIAGRAM ALUR CARD UI KONSISTEN & KONTRAS (HIJAU & MERAH)
+          } else if (block.type === 'flowchart') {
+            // DIAGRAM ALUR CARD UI
             pasalContentHtml += `
               <div class="mt-4 flex flex-col items-center space-y-3 py-4 max-w-xl mx-auto select-none">
                 
@@ -1257,7 +1154,7 @@ function renderPasalContent(bab) {
 
                 <!-- Card 3 -->
                 <div class="w-full bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-prudent-darkBorder p-3.5 rounded-xl shadow-xs text-center">
-                  <span class="text-[9px] font-semibold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 2</span>
+                  <span class="text-[9px] font-semibold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 3</span>
                   <p class="text-xs font-semibold text-slate-800 dark:text-slate-100">Pembinaan</p>
                 </div>
 
@@ -1266,7 +1163,7 @@ function renderPasalContent(bab) {
 
                 <!-- Card 4 -->
                 <div class="w-full bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-prudent-darkBorder p-3.5 rounded-xl shadow-xs text-center">
-                  <span class="text-[9px] font-semibold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 2</span>
+                  <span class="text-[9px] font-semibold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 4</span>
                   <p class="text-xs font-semibold text-slate-800 dark:text-slate-100">Evaluasi Hasil Pembinaan</p>
                 </div>
 
@@ -1275,7 +1172,7 @@ function renderPasalContent(bab) {
 
                 <!-- Decision Card (Kondisi) -->
                 <div class="w-full bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-prudent-darkBorder p-3.5 rounded-xl shadow-xs text-center">
-                  <span class="text-[9px] font-semibold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Langkah 2</span>
+                  <span class="text-[9px] font-semibold text-prudent-teal dark:text-prudent-tealNeon uppercase tracking-wider block mb-0.5">Evaluasi</span>
                   <p class="text-xs font-semibold text-slate-800 dark:text-slate-100">Perilaku Membaik?</p>
                 </div>
 
